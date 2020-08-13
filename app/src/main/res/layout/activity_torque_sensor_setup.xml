@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".activities.SystemSetupActivity">
+	<data>
+		<variable name="cfg"     type="spider65.ebike.tsdz2_esp32.data.TSDZ_Config"/>
+		<variable name="handler" type="spider65.ebike.tsdz2_esp32.activities.TorqueSensorCalibrationActivity"/>
+	</data>
+
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+		<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/main_toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:theme="@style/AppTheme.AppBarOverlay"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="?attr/colorPrimary"
+				android:minHeight="?attr/actionBarSize"
+				android:theme="?attr/actionBarTheme">
+
+				<TextView
+					android:id="@+id/toolbar_title"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_marginEnd="20dp"
+					android:gravity="center"
+					android:singleLine="true"
+					android:text="@string/title_activity_torque_sensor_setup" />
+			</androidx.appcompat.widget.Toolbar>
+		</com.google.android.material.appbar.AppBarLayout>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<LinearLayout
+				android:id="@+id/mainLinearLayout"
+				android:layout_width="match_parent"
+				android:layout_height="100dp"
+				android:layout_margin="0dp"
+				android:orientation="horizontal"
+				app:layout_constraintBottom_toTopOf="@id/chart">
+
+				<LinearLayout
+					android:id="@+id/inputOne"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="5dp"
+					android:orientation="vertical">
+
+					<EditText
+						android:id="@+id/firstNum_1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="kg_1"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[0][0])}"
+						android:inputType="number" />
+
+					<EditText
+						android:id="@+id/secondNum_1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="adc_1"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[0][1])}"
+						android:inputType="number" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/inputTwo"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="5dp"
+					android:orientation="vertical">
+
+					<EditText
+						android:id="@+id/firstNum_2"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="kg_2"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[1][0])}"
+						android:inputType="number" />
+
+					<EditText
+						android:id="@+id/secondNum_2"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="adc_2"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[1][1])}"
+						android:inputType="number" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/inputThree"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="5dp"
+					android:orientation="vertical">
+
+					<EditText
+						android:id="@+id/firstNum_3"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="kg_3"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[2][0])}"
+						android:inputType="number" />
+
+					<EditText
+						android:id="@+id/secondNum_3"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="adc_3"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[2][1])}"
+						android:inputType="number" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/inputFour"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="5dp"
+					android:orientation="vertical">
+
+					<EditText
+						android:id="@+id/firstNum_4"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="kg_4"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[3][0])}"
+						android:inputType="number" />
+
+					<EditText
+						android:id="@+id/secondNum_4"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="adc_4"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[3][1])}"
+						android:inputType="number" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/inputFive"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="5dp"
+					android:orientation="vertical">
+
+					<EditText
+						android:id="@+id/firstNum_5"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="kg_5"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[4][0])}"
+						android:inputType="number" />
+
+					<EditText
+						android:id="@+id/secondNum_5"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="adc_5"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[4][1])}"
+						android:inputType="number" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/inputSix"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="5dp"
+					android:orientation="vertical">
+
+					<EditText
+						android:id="@+id/firstNum_6"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="kg_6"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[5][0])}"
+						android:inputType="number" />
+
+					<EditText
+						android:id="@+id/secondNum_6"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hint="adc_6"
+						android:text="@{String.valueOf(cfg.ui16_torque_sensor_calibration[5][1])}"
+						android:inputType="number" />
+				</LinearLayout>
+
+			</LinearLayout>
+
+
+			<com.github.mikephil.charting.charts.LineChart
+				android:id="@+id/chart"
+				android:layout_width="match_parent"
+				android:layout_height="398dp"
+				app:layout_constraintBottom_toTopOf="@id/buttonLayout">
+
+			</com.github.mikephil.charting.charts.LineChart>
+
+			<LinearLayout
+				android:id="@+id/buttonLayout"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:orientation="horizontal"
+				app:layout_constraintBottom_toBottomOf="parent">
+
+
+				<Button
+					android:id="@+id/okButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:enabled="true"
+					android:onClick="@{handler::onOkCancelClick}"
+					android:text="@string/ok"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<Button
+					android:id="@+id/cancelButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:onClick="@{handler::onOkCancelClick}"
+					android:text="@string/cancel"
+					app:layout_constraintTop_toTopOf="parent" />
+
+			</LinearLayout>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
