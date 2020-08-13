@@ -1,7 +1,8 @@
 package spider65.ebike.tsdz2_esp32.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import spider65.ebike.tsdz2_esp32.TSDZBTService;
+import spider65.ebike.tsdz2_esp32.TSDZConst;
 import spider65.ebike.tsdz2_esp32.R;
 
 import android.content.Intent;
@@ -14,7 +15,6 @@ public class TSDZCfgActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tsdzcfg);
-
         Button b;
         b = findViewById(R.id.motor_button);
         b.setOnClickListener((View) -> setupMotor());
@@ -24,6 +24,16 @@ public class TSDZCfgActivity extends AppCompatActivity {
         b.setOnClickListener((View) -> setupLevels());
         b = findViewById(R.id.temperature_control);
         b.setOnClickListener((View) -> setupTemperature());
+        b = findViewById(R.id.torque_sensor);
+        b.setOnClickListener((View) -> torqueSensorCalib());		
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TSDZBTService service = TSDZBTService.getBluetoothService();
+        if (service != null && service.getConnectionStatus() == TSDZBTService.ConnectionState.CONNECTED)
+        TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_GET_STATUS_DATA});
     }
 
     private void setupMotor() {
@@ -42,5 +52,9 @@ public class TSDZCfgActivity extends AppCompatActivity {
 
     private void setupTemperature() {
         Intent intent = new Intent(this, TemperatureSetupActivity.class);
-        startActivity(intent);    }
+         startActivity(intent);    }
+
+    private void torqueSensorCalib() {
+        Intent intent = new Intent(this, TorqueSensorCalibrationActivity.class);
+        startActivity(intent);    }		
 }

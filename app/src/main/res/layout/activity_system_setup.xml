@@ -22,8 +22,16 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/title_activity_system_setup" />
+    </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,28 +84,13 @@
                         android:minWidth="100dp"/>
                 </LinearLayout>
 
-                <LinearLayout
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/acceleration" />
-
-                    <EditText
-                        android:id="@+id/accelerationET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:ems="2"
-                        android:text="@{String.valueOf(cfg.ui8_motor_acceleration)}"
-                        android:inputType="number" />
-                </LinearLayout>
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/acceleration" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -105,20 +98,31 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarAcceleration"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/max_current" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_motor_acceleration}" />
 
-                    <EditText
-                        android:id="@+id/maxCurrentET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAcceleration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="2"
-                        android:text="@{String.valueOf(cfg.ui8_battery_max_current)}"
-                        android:inputType="number" />
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_motor_acceleration)}" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/max_current" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -126,19 +130,90 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
+                    <SeekBar
+                        android:id="@+id/seekBarMaxCurrent"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="18"
+                        android:progress="@{cfg.ui8_battery_max_current}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarMaxCurrent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_battery_max_current)}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/max_power" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarMaxPower"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="40"
+                        android:progress="@{cfg.ui8_target_max_battery_power_div25}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarMaxPower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_target_max_battery_power_div25 * 25)}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/FWModeCB"
+                        android:layout_width="169dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:checked="@{cfg.ui8_field_weakening_enabled}"
+                        android:onCheckedChanged="@{handler::onCheckedChanged}"
+                        android:text="Field Weakening" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/max_power" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="15dp"
+                        android:text="FW Current %" />
 
                     <EditText
-                        android:id="@+id/maxPowerET"
+                        android:id="@+id/FWCurrentET"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
+                        android:text="@{String.valueOf(cfg.ui8_field_weakening_current)}"
                         android:ems="3"
-                        android:text="@{String.valueOf(cfg.ui8_target_max_battery_power_div25)}"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:enabled="@{cfg.ui8_field_weakening_enabled}" />
+
                 </LinearLayout>
 
                 <View
@@ -154,6 +229,12 @@
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:text="@string/sensors" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/threshold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -161,87 +242,70 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/assistCB"
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarCadThd"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:checked="@={cfg.assist_without_pedal_rotation}"
-                        android:onCheckedChanged="@{handler::onCheckedChanged}"
-                        android:text="@string/assit_wpr" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="@{cfg.ui8_assist_without_pedal_rotation_threshold}" />
 
                     <TextView
+                        android:id="@+id/TxtviewSeekBarCadThd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:text="@string/threshold" />
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_assist_without_pedal_rotation_threshold)}" />
+                </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/assistWPRET"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/torque_adc_step" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarTorqueAdcStep"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="@{cfg.ui8_pedal_torque_per_10_bit_ADC_step_x100}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarTorqueAdcStep"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:ems="3"
-                        android:text="@{String.valueOf(cfg.ui8_assist_without_pedal_rotation_threshold)}"
-                        android:inputType="number"
-                        android:enabled="@{cfg.assist_without_pedal_rotation}"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_pedal_torque_per_10_bit_ADC_step_x100)}" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/torque_adc_step" />
-
-                    <EditText
-                        android:id="@+id/torqueADCET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="2"
-                        android:text="@{String.valueOf(cfg.ui8_pedal_torque_per_10_bit_ADC_step_x100)}"
-                        android:inputType="number" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_margin="15dp"
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/torqueFixCB"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/torquecalibModeCB"
+                        android:layout_width="228dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:checked="@={cfg.torque_offset_fix}"
-                        android:onCheckedChanged="@{handler::onCheckedChanged}"
-                        android:text="@string/torque_offset_fix" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:text="@string/torque_adc_offset" />
-
-                    <EditText
-                        android:id="@+id/torqueADCOffsetET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:ems="3"
-                        android:text="@{String.valueOf(cfg.ui16_torque_offset_ADC)}"
-                        android:inputType="number"
-                        android:enabled="@{cfg.torque_offset_fix}"/>
+                        android:checked="@{cfg.ui8_torque_sensor_calibration_feature_enabled}"
+                        android:text="@string/torque_sensor_calib" />
                 </LinearLayout>
 
                 <View
@@ -280,13 +344,13 @@
                 </LinearLayout>
 
                 <CheckBox
-                    android:id="@+id/cruiseModeCB"
+                    android:id="@+id/walkModeCB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:checked="@{cfg.ui8_cruise_enabled}"
-                    android:text="@string/cruise_mode_enabled" />
+                    android:layout_margin="15dp"
+                    android:checked="@{cfg.ui8_walk_mode_enabled}"
+                    android:text="@string/walk_mode_enabled" />
 
                 <View
                     android:layout_width="match_parent"
@@ -305,7 +369,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_margin="15dp"
                     android:orientation="horizontal">
 
                     <CheckBox
@@ -334,7 +398,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
+                    android:layout_margin="15dp"
                     android:enabled="@{cfg.throttleEnabled}"
                     android:checked="@{cfg.ui8_street_mode_throttle_enabled &amp;&amp; cfg.throttleEnabled}"
                     android:text="@string/street_mode_throttle" />
@@ -366,7 +430,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/ligth_config"
+                        android:text="@string/light_config"
                         android:layout_gravity="center_vertical" />
 
                     <Spinner
@@ -378,8 +442,6 @@
                         android:entries="@array/ligths_cfg"
                         android:minWidth="100dp"/>
                 </LinearLayout>
-
-
 
             </LinearLayout>
 

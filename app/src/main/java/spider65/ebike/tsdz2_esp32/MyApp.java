@@ -10,7 +10,7 @@ public class MyApp extends Application {
     private static MyApp instance;
     private static LogManager mLogManager;
 
-    @Override
+	@Override
     public void onCreate() {
         super.onCreate();
         instance = this;

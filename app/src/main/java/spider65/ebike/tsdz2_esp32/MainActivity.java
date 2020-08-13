@@ -27,12 +27,9 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import spider65.ebike.tsdz2_esp32.activities.BluetoothSetupActivity;
 import spider65.ebike.tsdz2_esp32.activities.ChartActivity;
-import spider65.ebike.tsdz2_esp32.activities.ESP32ConfigActivity;
 import spider65.ebike.tsdz2_esp32.activities.TSDZCfgActivity;
 import spider65.ebike.tsdz2_esp32.data.TSDZ_Debug;
 import spider65.ebike.tsdz2_esp32.data.TSDZ_Status;
-import spider65.ebike.tsdz2_esp32.ota.Esp32_Ota;
-import spider65.ebike.tsdz2_esp32.ota.Stm8_Ota;
 import spider65.ebike.tsdz2_esp32.utils.OnSwipeListener;
 
 import android.util.Log;
@@ -50,7 +47,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import static java.util.Arrays.copyOfRange;
-import static spider65.ebike.tsdz2_esp32.TSDZConst.CMD_GET_APP_VERSION;
 import static spider65.ebike.tsdz2_esp32.TSDZConst.DEBUG_ADV_SIZE;
 import static spider65.ebike.tsdz2_esp32.TSDZConst.STATUS_ADV_SIZE;
 import static spider65.ebike.tsdz2_esp32.activities.BluetoothSetupActivity.KEY_DEVICE_MAC;
@@ -223,7 +219,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mIntentFilter.addAction(TSDZBTService.CONNECTION_SUCCESS_BROADCAST);
         mIntentFilter.addAction(TSDZBTService.CONNECTION_FAILURE_BROADCAST);
         mIntentFilter.addAction(TSDZBTService.CONNECTION_LOST_BROADCAST);
-        mIntentFilter.addAction(TSDZBTService.TSDZ_COMMAND_BROADCAST);
         mIntentFilter.addAction(TSDZBTService.TSDZ_STATUS_BROADCAST);
         mIntentFilter.addAction(TSDZBTService.TSDZ_DEBUG_BROADCAST);
 
@@ -269,17 +264,10 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onPrepareOptionsMenu (Menu menu) {
         TSDZBTService service = TSDZBTService.getBluetoothService();
         if (service != null && service.getConnectionStatus() == TSDZBTService.ConnectionState.CONNECTED) {
-            menu.findItem(R.id.bikeOTA).setEnabled(true);
-            menu.findItem(R.id.espOTA).setEnabled(true);
-            menu.findItem(R.id.showVersion).setEnabled(true);
             menu.findItem(R.id.config).setEnabled(true);
-            menu.findItem(R.id.esp32Config).setEnabled(true);
         } else {
-            menu.findItem(R.id.bikeOTA).setEnabled(false);
-            menu.findItem(R.id.espOTA).setEnabled(false);
-            menu.findItem(R.id.showVersion).setEnabled(false);
-            menu.findItem(R.id.config).setEnabled(false);
-            menu.findItem(R.id.esp32Config).setEnabled(false);
+            menu.findItem(R.id.config).setEnabled(true);
+            //menu.findItem(R.id.config).setEnabled(false);
         }
         return true;
     }
@@ -289,27 +277,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         Intent intent;
         int id = item.getItemId();
         switch (id) {
-            case R.id.espOTA:
-                intent = new Intent(this, Esp32_Ota.class);
-                startActivity(intent);
-                return true;
-            case R.id.bikeOTA:
-                intent = new Intent(this, Stm8_Ota.class);
-                startActivity(intent);
-                return true;
             case R.id.config:
                 intent = new Intent(this, TSDZCfgActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.btSetup:
+               // intent = new Intent(
+                //        "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+
                 intent = new Intent(this, BluetoothSetupActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.showVersion:
-                TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_GET_APP_VERSION});
-                return true;
-            case R.id.esp32Config:
-                intent = new Intent(this, ESP32ConfigActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.screenONCB:
@@ -379,24 +355,16 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 modeLevelTV.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.off_mode_icon, 0, 0, 0);
                 modeLevelTV.setText("0");
                 break;
+            case POWER_ASSIST_MODE:
+                modeLevelTV.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.power_mode_icon, 0, 0, 0);
+                modeLevelTV.setText(String.valueOf(status.assistLevel));
+                break;
             case eMTB_ASSIST_MODE:
                 modeLevelTV.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.emtb_mode_icon, 0, 0, 0);
                 modeLevelTV.setText(String.valueOf(status.assistLevel));
                 break;
             case WALK_ASSIST_MODE:
                 modeLevelTV.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.walk_mode_icon, 0, 0, 0);
-                modeLevelTV.setText(String.valueOf(status.assistLevel));
-                break;
-            case POWER_ASSIST_MODE:
-                modeLevelTV.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.power_mode_icon, 0, 0, 0);
-                modeLevelTV.setText(String.valueOf(status.assistLevel));
-                break;
-            case TORQUE_ASSIST_MODE:
-                modeLevelTV.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.torque_mode_icon, 0, 0, 0);
-                modeLevelTV.setText(String.valueOf(status.assistLevel));
-                break;
-            case CADENCE_ASSIST_MODE:
-                modeLevelTV.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.cadence_mode_icon, 0, 0, 0);
                 modeLevelTV.setText(String.valueOf(status.assistLevel));
                 break;
             case CRUISE_MODE:
@@ -440,30 +408,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
     }
 
-    // Version packet format is "%s|%s|%d".
-    // First string is the ESP32 Main FW version, second is ESP32 OTA FW version and last integer
-    // is the Bike Controller FW version.
-    // The two strings are up to 8 char and the last integer is between 0 and 127.
-    private void showVersions(byte[] data) {
-        String s = new String(copyOfRange(data, 1, data.length), StandardCharsets.UTF_8);
-        Log.d(TAG, "Version string is: " + s);
-        String[] versions = s.split("\\|");
-        if (versions.length != 2) {
-            Log.e(TAG, "showVersions: wrong string");
-            return;
-        }
-        if ("255".equals(versions[0]))
-            versions[0] = "n/a";
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.fw_versions));
-        String message = getString(R.string.esp32_fw_version, versions[1]) + "\n" +
-                    getString(R.string.tsdz_fw_version, versions[0]);
-        builder.setMessage(message);
-        builder.setPositiveButton(android.R.string.ok, null);
-        builder.show();
-    }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             //Log.d(TAG, "onReceive " + intent.getAction());
@@ -509,11 +454,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 					R.mipmap.bt_connecting, 0, 0, 0);
 					invalidateOptionsMenu();
 					break;
-				case TSDZBTService.TSDZ_COMMAND_BROADCAST:
-                    data = intent.getByteArrayExtra(TSDZBTService.VALUE_EXTRA);
-                    if (data[0] == CMD_GET_APP_VERSION)
-				        showVersions(data);
-                    break;
                 case TSDZBTService.TSDZ_STATUS_BROADCAST:
                     data = intent.getByteArrayExtra(TSDZBTService.VALUE_EXTRA);
                     if (!Arrays.equals(lastStatusData, data)) {

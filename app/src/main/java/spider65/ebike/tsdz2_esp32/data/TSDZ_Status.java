@@ -12,7 +12,7 @@ public class TSDZ_Status {
     public int assistLevel;
     public float speed;
     public int cadence;
-    public float motorTemperature;
+    public int motorTemperature;
     public int pPower;
     public float volts;
     public float amperes;
@@ -24,11 +24,9 @@ public class TSDZ_Status {
     public enum RidingMode {
         OFF_MODE(0),
         POWER_ASSIST_MODE(1),
-        TORQUE_ASSIST_MODE(2),
-        CADENCE_ASSIST_MODE(3),
-        eMTB_ASSIST_MODE(4),
-        WALK_ASSIST_MODE(5),
-        CRUISE_MODE(6);
+        eMTB_ASSIST_MODE(2),
+        WALK_ASSIST_MODE(3),
+        CRUISE_MODE(4);
 
         RidingMode(int value) {
             this.value = value;
@@ -70,18 +68,16 @@ public class TSDZ_Status {
             Log.e(TAG, "Wrong Status BT message size!");
             return false;
         }
-        this.ridingMode = RidingMode.valueOf(data[0] & 255);
-        this.assistLevel = (data[1] & 255);
-        this.speed = (float)(((data[3] & 255) << 8) + (data[2] & 255)) / 10;
-        this.cadence = (data[4] & 255);
-        short s = (short) ((data[5] & 0xff) | (data[6] << 8));
-        this.motorTemperature = (float)(s) / 10;
+        this.ridingMode = RidingMode.valueOf(data[1] & 255);
+        this.assistLevel = (data[2] & 255);
+        this.speed = (float)(((data[4] & 255) << 8) + (data[3] & 255)) / 10;
+        this.cadence = (data[5] & 255);
+        this.motorTemperature = (data[6] & 255);
         this.pPower = ((data[8] & 255) << 8) + ((data[7] & 255));
-        this.pPower = (this.pPower+5)/10;
-        this.volts = (float)(((data[10] & 255) << 8) + (data[9] & 255)) / 1000;
-        this.amperes = (float)(data[11] & 255) / 10;
-        this.status = (data[12] & 255);
-        this.brake = (data[13] & 255) != 0;
+        this.volts = (float)(((data[10] & 255) << 8) + (data[9] & 255)) / 10;
+        this.amperes = (float)(((data[12] & 255) << 8) + (data[11] & 255)) / 10;
+        this.status = (data[13] & 255);
+        //this.brake = (data[13] & 255) != 0;
         this.wattHour = ((data[15] & 255) << 8) + ((data[14] & 255));
         this.streetMode = (data[16] & 255) != 0;
         return true;

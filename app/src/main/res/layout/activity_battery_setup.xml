@@ -45,30 +45,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:background="@drawable/background_with_shadow"
                 android:layout_margin="5dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/cells_nr" />
-
-                    <EditText
-                        android:id="@+id/cellsNrET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:ems="3"
-                        android:text="@{String.valueOf(cfg.ui8_battery_cells_number)}"
-                        android:inputType="number" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -144,15 +123,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/cell_overvolt" />
+                        android:text="@string/battery_total_wh" />
 
                     <EditText
-                        android:id="@+id/cellOvervoltET"
+                        android:id="@+id/battery_total_WhET"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_li_io_cell_overvolt_x100)}"
+                        android:text="@{String.valueOf(cfg.ui32_wh_x10_100_percent / 10)}"
                         android:inputType="number" />
                 </LinearLayout>
 
@@ -165,62 +144,42 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/cell_empty" />
+                        android:text="@string/battery_used_wh" />
 
                     <EditText
-                        android:id="@+id/cellEmptyET"
+                        android:id="@+id/battery_used_WhET"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_li_io_cell_empty_x100)}"
-                        android:inputType="number" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cell_one_bar" />
-
-                    <EditText
-                        android:id="@+id/cellOneBarET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_li_io_cell_one_bar_x100)}"
+                        android:text="@{String.valueOf(cfg.ui32_wh_x10_offset / 10)}"
                         android:inputType="number" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/cell_all_bars" />
+                        android:text="@string/soc_type"
+                        android:layout_gravity="center_vertical" />
 
-                    <EditText
-                        android:id="@+id/cellAllBarsET"
+                    <Spinner
+                        android:id="@+id/SOCTypeET"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_li_io_cell_full_bars_x100)}"
-                        android:inputType="number" />
+                        android:entries="@array/soc_types"
+                        android:minWidth="100dp"/>
                 </LinearLayout>
 
-            </LinearLayout>
+
+                </LinearLayout>
 
         </ScrollView>
 

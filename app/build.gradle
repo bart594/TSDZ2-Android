@@ -4,17 +4,17 @@ android {
     compileSdkVersion 28
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "spider65.ebike.tsdz2_esp32"
+        applicationId "spider65mod.ebike.tsdz2_sw102"
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 7
-        versionName "2.1.0"
+        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "TSDZ2_ESP32v${defaultConfig.versionName}.apk"
+            outputFileName = "TSDZ2_SW102v${defaultConfig.versionName}.apk"
         }
     }
 

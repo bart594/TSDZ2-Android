@@ -50,9 +50,41 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="Assist Levels Number" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarAssistLevelsNumber"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:indeterminate="false"
+                        android:max="5"
+                        android:progress="@{cfg.ui8_number_of_assist_levels}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAssistLevelsNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@{String.valueOf(cfg.ui8_number_of_assist_levels)}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="@string/eMTB_mode" />
+                    android:text="eMTB Mode Level" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -60,82 +92,23 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBareMTBLevel"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/emtb_assit_level_1" />
-
-                    <EditText
-                        android:id="@+id/eMTBAssist1ET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_eMTB_assist_level[0])}"
-                        android:inputType="number" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:indeterminate="false"
+                        android:max="10"
+                        android:progress="@{cfg.ui8_eMTB_assist_level}" />
 
                     <TextView
+                        android:id="@+id/TxtviewSeekBareMTBLevel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/emtb_assit_level_2" />
-
-                    <EditText
-                        android:id="@+id/eMTBAssist2ET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_eMTB_assist_level[1])}"
-                        android:inputType="number" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/emtb_assit_level_3" />
-
-                    <EditText
-                        android:id="@+id/eMTBAssist3ET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_eMTB_assist_level[2])}"
-                        android:inputType="number" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/emtb_assit_level_4" />
-
-                    <EditText
-                        android:id="@+id/eMTBAssist4ET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_eMTB_assist_level[3])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_eMTB_assist_level)}" />
                 </LinearLayout>
 
                 <View
@@ -146,11 +119,27 @@
                     android:background="?android:attr/listDivider" />
 
                 <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="@string/power_mode" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                     />
+
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="@string/power_mode" />
+                    android:text="Torque RPM Limit" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -158,82 +147,168 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarTorqueRPMLimit"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/power_assist_level_1" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:indeterminate="false"
+                        android:max="120"
+                        android:progress="@{cfg.ui8_cadence_RPM_limit}" />
 
-                    <EditText
-                        android:id="@+id/powerAssist1ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarTorqueRPMLimit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_power_assist_level[0])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_cadence_RPM_limit)}" />
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Torque Boost Factor" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarTorqueBoostFactor"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/power_assist_level_2" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="10"
+                        android:progress="@{cfg.ui8_torque_boost_factor}" />
 
-                    <EditText
-                        android:id="@+id/powerAssist2ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarTorqueBoostFactor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_power_assist_level[1])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_torque_boost_factor)}" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Level 1" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Assist Support %" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_marginTop="15dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarAssistLevel1"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/power_assist_level_3" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_power_assist_level[0]}" />
 
-                    <EditText
-                        android:id="@+id/powerAssist3ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAssistLevel1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_power_assist_level[2])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_power_assist_level[0] * 10)}" />
                 </LinearLayout>
 
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="Motor Acceleration" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarAccelerationLevel1"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/power_assist_level_4" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_motor_acceleration_level[0]}" />
 
-                    <EditText
-                        android:id="@+id/powerAssist4ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAccelerationLevel1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_power_assist_level[3])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_motor_acceleration_level[0])}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Peak Power (W)" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarPeakPowerLevel1"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="@{cfg.ui8_target_max_battery_power_div25}"
+                        android:progress="@{cfg.ui8_target_peak_battery_power_div25[0]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarPeakPowerLevel1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_target_peak_battery_power_div25[0] * 25)}" />
                 </LinearLayout>
 
                 <View
@@ -241,14 +316,22 @@
                     android:layout_height="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="?android:attr/listDivider" />
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="@string/torque_mode" />
+                    android:text="Level 2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Assist Support %" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -256,62 +339,65 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarAssistLevel2"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/torque_assist_level_1" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_power_assist_level[1]}" />
 
-                    <EditText
-                        android:id="@+id/torqueAssist1ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAssistLevel2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_torque_assist_level[0])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_power_assist_level[1] * 10)}" />
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Motor Acceleration" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarAccelerationLevel2"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/torque_assist_level_2" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_motor_acceleration_level[1]}" />
 
-                    <EditText
-                        android:id="@+id/torqueAssist2ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAccelerationLevel2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_torque_assist_level[1])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_motor_acceleration_level[1])}" />
                 </LinearLayout>
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Peak Power (W)" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/torque_assist_level_3" />
-
-                    <EditText
-                        android:id="@+id/torqueAssist3ET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_torque_assist_level[2])}"
-                        android:inputType="number" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -319,19 +405,23 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarPeakPowerLevel2"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/torque_assist_level_4" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="@{cfg.ui8_target_max_battery_power_div25}"
+                        android:progress="@{cfg.ui8_target_peak_battery_power_div25[1]}" />
 
-                    <EditText
-                        android:id="@+id/torqueAssist4ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarPeakPowerLevel2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_torque_assist_level[3])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_target_peak_battery_power_div25[1] * 25)}" />
                 </LinearLayout>
 
                 <View
@@ -339,14 +429,22 @@
                     android:layout_height="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="?android:attr/listDivider" />
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="@string/cadence_mode" />
+                    android:text="Level 3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Assist Support %" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -354,62 +452,65 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarAssistLevel3"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/cadence_assist_level_1" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_power_assist_level[2]}" />
 
-                    <EditText
-                        android:id="@+id/cadenceAssist1ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAssistLevel3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_cadence_assist_level[0])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_power_assist_level[2] * 10)}" />
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Motor Acceleration" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarAccelerationLevel3"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/cadence_assist_level_2" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_motor_acceleration_level[2]}" />
 
-                    <EditText
-                        android:id="@+id/cadenceAssist2ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAccelerationLevel3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_cadence_assist_level[1])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_motor_acceleration_level[2])}" />
                 </LinearLayout>
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Peak Power (W)" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cadence_assist_level_3" />
-
-                    <EditText
-                        android:id="@+id/cadenceAssist3ET"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_cadence_assist_level[2])}"
-                        android:inputType="number" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -417,22 +518,250 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarPeakPowerLevel3"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/cadence_assist_level_4" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="@{cfg.ui8_target_max_battery_power_div25}"
+                        android:progress="@{cfg.ui8_target_peak_battery_power_div25[2]}" />
 
-                    <EditText
-                        android:id="@+id/cadenceAssist4ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarPeakPowerLevel3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_cadence_assist_level[3])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_target_peak_battery_power_div25[2] * 25)}" />
                 </LinearLayout>
 
                 <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Level 4" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Assist Support %" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarAssistLevel4"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_power_assist_level[3]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAssistLevel4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_power_assist_level[3] * 10)}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Motor Acceleration" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarAccelerationLevel4"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_motor_acceleration_level[3]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAccelerationLevel4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_motor_acceleration_level[3])}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Peak Power (W)" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarPeakPowerLevel4"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="@{cfg.ui8_target_max_battery_power_div25}"
+                        android:progress="@{cfg.ui8_target_peak_battery_power_div25[3]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarPeakPowerLevel4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_target_peak_battery_power_div25[3] * 25)}" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Level 5" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Assist Support %" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarAssistLevel5"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_power_assist_level[4]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAssistLevel5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_power_assist_level[4] * 10)}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Motor Acceleration" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarAccelerationLevel5"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_motor_acceleration_level[4]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarAccelerationLevel5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_motor_acceleration_level[4])}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Peak Power (W)" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarPeakPowerLevel5"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="@{cfg.ui8_target_max_battery_power_div25}"
+                        android:progress="@{cfg.ui8_target_peak_battery_power_div25[4]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarPeakPowerLevel5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_target_peak_battery_power_div25[4] * 25)}" />
+                </LinearLayout>
+
+                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginTop="10dp"
@@ -445,6 +774,19 @@
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:text="@string/walk_mode" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                 />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Walk Assist Level 1" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -452,82 +794,179 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarWalkAssistLevel1"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/walk_assist_level_1" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="@{cfg.ui8_walk_assist_level[0]}" />
 
-                    <EditText
-                        android:id="@+id/walkAssist1ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarWalkAssistLevel1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_walk_assist_level[0])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_walk_assist_level[0])}" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Walk Assist Level 2" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarWalkAssistLevel2"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/walk_assist_level_2" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="@{cfg.ui8_walk_assist_level[1]}" />
 
-                    <EditText
-                        android:id="@+id/walkAssist2ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarWalkAssistLevel2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_walk_assist_level[1])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_walk_assist_level[1])}" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Walk Assist Level 3" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarWalkAssistLevel3"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/walk_assist_level_3" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="@{cfg.ui8_walk_assist_level[2]}" />
 
-                    <EditText
-                        android:id="@+id/walkAssist3ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarWalkAssistLevel3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_walk_assist_level[2])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_walk_assist_level[2])}" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Walk Assist Level 4" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <SeekBar
+                        android:id="@+id/seekBarWalkAssistLevel4"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/walk_assist_level_4" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="@{cfg.ui8_walk_assist_level[3]}" />
 
-                    <EditText
-                        android:id="@+id/walkAssist4ET"
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarWalkAssistLevel4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:ems="4"
-                        android:text="@{String.valueOf(cfg.ui8_walk_assist_level[3])}"
-                        android:inputType="number" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_walk_assist_level[3])}" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Walk Assist Level 5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarWalkAssistLevel5"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="@{cfg.ui8_walk_assist_level[4]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarWalkAssistLevel5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@{String.valueOf(cfg.ui8_walk_assist_level[4])}" />
                 </LinearLayout>
 
             </LinearLayout>

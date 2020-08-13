@@ -299,22 +299,22 @@
         app:layout_constraintVertical_bias="0.6" />
 
     <TextView
-        android:id="@+id/cadenceTV"
+        android:id="@+id/energyperKmTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/not_used"
+        android:text="@string/battery_energy_h_km"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         app:layout_constraintTop_toTopOf="@+id/horiz3"
-        app:layout_constraintBottom_toTopOf="@+id/cadenceValueTV"
+        app:layout_constraintBottom_toTopOf="@+id/energyperKMValueTV"
         app:layout_constraintEnd_toStartOf="@+id/vert3"
         app:layout_constraintStart_toStartOf="@+id/vert2" />
 
     <TextView
-        android:id="@+id/cadenceValueTV"
+        android:id="@+id/energyperKMValueTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="32sp"
-        android:text="@{String.valueOf(debug.notUsed)}"
+        android:text="@{String.valueOf(debug.battery_energy_h_km_x10)}"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
         app:layout_constraintBottom_toTopOf="@+id/horiz4"
         app:layout_constraintEnd_toStartOf="@+id/vert3"
@@ -348,22 +348,22 @@
         app:layout_constraintVertical_bias="0.6" />
 
     <TextView
-        android:id="@+id/pcbTempTV"
+        android:id="@+id/pedalweightTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/controller_temp"
+        android:text="@string/pedal_weight"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         app:layout_constraintTop_toTopOf="@+id/horiz4"
-        app:layout_constraintBottom_toTopOf="@+id/pcbTempValueTV"
+        app:layout_constraintBottom_toTopOf="@+id/pedalweightValueTV"
         app:layout_constraintEnd_toStartOf="@+id/vert3"
         app:layout_constraintStart_toStartOf="@+id/vert2" />
 
     <TextView
-        android:id="@+id/pcbTempValueTV"
+        android:id="@+id/pedalweightValueTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="32sp"
-        android:text="@{@string/temperatureField(debug.pcbTemperature)}"
+        android:text="@{String.valueOf(debug.pedalWeight)}"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
         app:layout_constraintBottom_toTopOf="@+id/horiz5"
         app:layout_constraintEnd_toStartOf="@+id/vert3"

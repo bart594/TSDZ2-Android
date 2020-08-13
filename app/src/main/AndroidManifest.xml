@@ -27,10 +27,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.ESP32ConfigActivity"
-            android:label="@string/title_activity_esp32_config"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activities.SystemSetupActivity"
             android:label="@string/title_activity_system_setup"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -50,18 +46,6 @@
             android:name=".activities.TSDZCfgActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ota.Esp32_Ota"
-            android:label="@string/title_activity_esp32_ota"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ota.Stm8_Ota"
-            android:label="@string/title_activity_stm8_ota"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
             android:name=".activities.ChartActivity"
             android:label="@string/title_activity_chart"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -69,6 +53,10 @@
             android:name=".activities.BluetoothSetupActivity"
             android:label="@string/title_activity_bluetooth_setup"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.TorqueSensorCalibrationActivity"
+            android:label="@string/title_activity_torque_sensor_setup"
+            android:theme="@style/AppTheme.NoActionBar" />			
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -81,11 +69,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".NotificationService"
+			android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
 
+            <intent-filter>
+
+                <action android:name="android.service.notification.NotificationListenerService" />
+
+            </intent-filter>
+
+        </service>
         <service
             android:name=".TSDZBTService"
             android:enabled="true"
             android:exported="false" />
+		 <receiver android:name=".TSDZBTService$NavinfoServiceReceiver" android:enabled="true">
+            <intent-filter>
+                <action android:name="nav_msg"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

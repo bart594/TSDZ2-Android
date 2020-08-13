@@ -24,30 +24,28 @@ import java.util.List;
 import java.util.UUID;
 
 import androidx.core.app.NotificationCompat;
+import android.content.BroadcastReceiver;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import spider65.ebike.tsdz2_esp32.data.TSDZ_Config;
 
 import static android.bluetooth.BluetoothDevice.TRANSPORT_LE;
 import static spider65.ebike.tsdz2_esp32.TSDZConst.DEBUG_ADV_SIZE;
-import static spider65.ebike.tsdz2_esp32.TSDZConst.STATUS_ADV_SIZE;
-
 
 public class TSDZBTService extends Service {
 
     private static final String TAG = "TSDZBTService";
 
-    public static String TSDZ_SERVICE = "000000ff-0000-1000-8000-00805f9b34fb";
-    public static String TSDZ_CHARACTERISTICS_STATUS = "0000ff01-0000-1000-8000-00805f9b34fb";
-    public static String TSDZ_CHARACTERISTICS_DEBUG = "0000ff02-0000-1000-8000-00805f9b34fb";
-    public static String TSDZ_CHARACTERISTICS_CONFIG = "0000ff03-0000-1000-8000-00805f9b34fb";
-    public static String TSDZ_CHARACTERISTICS_COMMAND = "0000ff04-0000-1000-8000-00805f9b34fb";
+    private NavinfoServiceReceiver NavinfoServiceReceiver = new NavinfoServiceReceiver();
+
+    public static String TSDZ_SERVICE = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+    public static String TSDZ_CHARACTERISTICS_STATUS = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+    public static String TSDZ_CHARACTERISTICS_CONFIG = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
     public static String CLIENT_CHARACTERISTIC_CONFIG = "00002902-0000-1000-8000-00805f9b34fb";
     public final static UUID UUID_TSDZ_SERVICE = UUID.fromString(TSDZ_SERVICE);
     public final static UUID UUID_STATUS_CHARACTERISTIC = UUID.fromString(TSDZ_CHARACTERISTICS_STATUS);
-    public final static UUID UUID_DEBUG_CHARACTERISTIC = UUID.fromString(TSDZ_CHARACTERISTICS_DEBUG);
     public final static UUID UUID_CONFIG_CHARACTERISTIC = UUID.fromString(TSDZ_CHARACTERISTICS_CONFIG);
-    public final static UUID UUID_COMMAND_CHARACTERISTIC = UUID.fromString(TSDZ_CHARACTERISTICS_COMMAND);
+
 
     public static final String ADDRESS_EXTRA = "ADDRESS";
     public static final String VALUE_EXTRA = "VALUE";
@@ -79,9 +77,7 @@ public class TSDZBTService extends Service {
     private int connectionRetry = 0;
 
     private BluetoothGattCharacteristic tsdz_status_char = null;
-    private BluetoothGattCharacteristic tsdz_debug_char = null;
     private BluetoothGattCharacteristic tsdz_config_char = null;
-    private BluetoothGattCharacteristic tsdz_command_char = null;
 
     public static TSDZBTService getBluetoothService() {
         return mService;
@@ -107,7 +103,7 @@ public class TSDZBTService extends Service {
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy");
-    }
+      }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -185,6 +181,8 @@ public class TSDZBTService extends Service {
 
         // Start foreground service.
         startForeground(1, notification);
+        //Start notification service
+        LocalBroadcastManager.getInstance(this).registerReceiver(NavinfoServiceReceiver, new IntentFilter("nav_msg"));
 
         Intent bi = new Intent(SERVICE_STARTED_BROADCAST);
         LocalBroadcastManager.getInstance(this).sendBroadcast(bi);
@@ -197,6 +195,7 @@ public class TSDZBTService extends Service {
 
         // Stop foreground service and remove the notification.
         stopForeground(true);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(NavinfoServiceReceiver);
 
         Intent bi = new Intent(SERVICE_STOPPED_BROADCAST);
         LocalBroadcastManager.getInstance(this).sendBroadcast(bi);
@@ -247,28 +246,26 @@ public class TSDZBTService extends Service {
                             if (c.getUuid().equals(UUID_STATUS_CHARACTERISTIC)) {
                                 tsdz_status_char = c;
                                 Log.d(TAG, "UUID_STATUS_CHARACTERISTIC enable notifications");
-                            } else if(c.getUuid().equals(UUID_DEBUG_CHARACTERISTIC)) {
-                                tsdz_debug_char = c;
-                                Log.d(TAG, "UUID_DEBUG_CHARACTERISTIC enable notifications");
                             } else if(c.getUuid().equals(UUID_CONFIG_CHARACTERISTIC)) {
                                 tsdz_config_char = c;
-                            } else if(c.getUuid().equals(UUID_COMMAND_CHARACTERISTIC)) {
-                                tsdz_command_char = c;
-                                Log.d(TAG, "UUID_COMMAND_CHARACTERISTIC enable notifications");
+                                Log.d(TAG, "UUID_CONFIG_CHARACTERISTIC enable notifications");
                             }
                         }
                     }
                 }
-                if (tsdz_status_char == null || tsdz_debug_char == null || tsdz_config_char == null
-                        || tsdz_command_char == null) {
+                if (tsdz_status_char == null || tsdz_config_char == null) {
                     Intent bi = new Intent(CONNECTION_FAILURE_BROADCAST);
                     // TODO bi.putExtra("MESSAGE", "Error Detail");
                     LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
                     Log.e(TAG, "onServicesDiscovered Characteristic not found!");
                     disconnect();
                     return;
-                }
-                // setCharacteristicNotification is asynchronous. Before to make a new call we
+                }else if (mConnectionState == ConnectionState.CONNECTING) {
+                mConnectionState = ConnectionState.CONNECTED;
+                Intent bi = new Intent(CONNECTION_SUCCESS_BROADCAST);
+                LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
+            }
+            // setCharacteristicNotification is asynchronous. Before to make a new call we
                 // must wait the end of the previous in the callback onDescriptorWrite
                 setCharacteristicNotification(tsdz_status_char,true);
             } else {
@@ -281,25 +278,6 @@ public class TSDZBTService extends Service {
                                       int status) {
             //Log.d(TAG, "onDescriptorWrite:" + descriptor.getCharacteristic().getUuid().toString() +
             //        " - " + descriptor.getUuid().toString());
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                if (descriptor.getUuid().equals(UUID.fromString(CLIENT_CHARACTERISTIC_CONFIG))) {
-                    boolean enable = (descriptor.getValue()[0] & 0x01) == 1;
-                    //Log.d(TAG, "onDescriptorWrite: value = " + descriptor.getValue()[0]);
-                    if (descriptor.getCharacteristic().getUuid().equals(UUID_STATUS_CHARACTERISTIC))
-                        setCharacteristicNotification(tsdz_debug_char,enable);
-                    else if (descriptor.getCharacteristic().getUuid().equals(UUID_DEBUG_CHARACTERISTIC))
-                        setCharacteristicNotification(tsdz_command_char,enable);
-                    else if (descriptor.getCharacteristic().getUuid().equals(UUID_COMMAND_CHARACTERISTIC))
-                        if (mConnectionState == ConnectionState.CONNECTING) {
-                            mConnectionState = ConnectionState.CONNECTED;
-                            Intent bi = new Intent(CONNECTION_SUCCESS_BROADCAST);
-                            LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
-                        } else {
-                            // DISCONNECTING
-                            mBluetoothGatt.disconnect();
-                        }
-                }
-            }
         }
 
         @Override
@@ -308,11 +286,11 @@ public class TSDZBTService extends Service {
                                          int status) {
             //Log.d(TAG, "onCharacteristicRead:" + characteristic.getUuid().toString());
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                if (UUID_CONFIG_CHARACTERISTIC.equals(characteristic.getUuid())) {
-                    Intent bi = new Intent(TSDZ_CFG_READ_BROADCAST);
-                    bi.putExtra(VALUE_EXTRA, characteristic.getValue());
-                    LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
-                }
+               // if (UUID_CONFIG_CHARACTERISTIC.equals(characteristic.getUuid())) {
+               //     Intent bi = new Intent(TSDZ_CFG_READ_BROADCAST);
+               //     bi.putExtra(VALUE_EXTRA, characteristic.getValue());
+               //     LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
+               // }
             } else {
                 Log.e(TAG, "Characteristic read Error: " + status);
             }
@@ -324,27 +302,25 @@ public class TSDZBTService extends Service {
             //Log.d(TAG, "onCharacteristicChanged:" + characteristic.getUuid().toString());
             byte [] data = characteristic.getValue();
             if (UUID_STATUS_CHARACTERISTIC.equals(characteristic.getUuid())) {
-                if (data.length == STATUS_ADV_SIZE) {
-                    Intent bi = new Intent(TSDZ_STATUS_BROADCAST);
-                    bi.putExtra(VALUE_EXTRA, data);
-                    LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
-                } else {
-                    Log.e(TAG, "Wrong Status Advertising Size: " + data.length);
+                    if ((data [0] == 0x52)) {
+                        Intent bi = new Intent(TSDZ_STATUS_BROADCAST);
+                        bi.putExtra(VALUE_EXTRA, data);
+                        LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
+                    }else if (data[0] == 0x44) {
+                        Intent bi = new Intent(TSDZ_DEBUG_BROADCAST);
+                        bi.putExtra(VALUE_EXTRA, characteristic.getValue());
+                        LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
+                    } else if (data[0] == 0x43) {
+                        Intent bi = new Intent(TSDZ_CFG_READ_BROADCAST);
+                        bi.putExtra(VALUE_EXTRA, characteristic.getValue());
+                        LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
+                    } else if (data[0] == 0x4E) {
+                        Log.d(TAG, "NOP");
+                    } else {
+                        Log.e(TAG, "Wrong RX Advertising Data");
+                    }
                 }
-            } else if (UUID_DEBUG_CHARACTERISTIC.equals(characteristic.getUuid())) {
-                if (data.length == DEBUG_ADV_SIZE) {
-                    Intent bi = new Intent(TSDZ_DEBUG_BROADCAST);
-                    bi.putExtra(VALUE_EXTRA, characteristic.getValue());
-                    LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
-                } else {
-                    Log.e(TAG, "Wrong Debug Advertising Size: " + data.length);
-                }
-            } else if (UUID_COMMAND_CHARACTERISTIC.equals(characteristic.getUuid())) {
-                Intent bi = new Intent(TSDZ_COMMAND_BROADCAST);
-                bi.putExtra(VALUE_EXTRA, characteristic.getValue());
-                LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
             }
-        }
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt,
@@ -352,12 +328,12 @@ public class TSDZBTService extends Service {
                                          int status) {
             //Log.d(TAG, "onCharacteristicWrite:" + characteristic.getUuid().toString());
             if (UUID_CONFIG_CHARACTERISTIC.equals(characteristic.getUuid())) {
-                Intent bi = new Intent(TSDZ_CFG_WRITE_BROADCAST);
-                if (status == BluetoothGatt.GATT_SUCCESS)
-                    bi.putExtra(VALUE_EXTRA, true);
-                else
-                    bi.putExtra(VALUE_EXTRA, false);
-                LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
+               byte[] w_data = characteristic.getValue();
+               if ((w_data [0] == 0x53)) {
+                   Intent bi = new Intent(TSDZ_CFG_WRITE_BROADCAST);
+                   bi.putExtra(VALUE_EXTRA, true);
+                   LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
+               }
             }
         }
     };
@@ -387,7 +363,7 @@ public class TSDZBTService extends Service {
         }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
-        mBluetoothGatt = device.connectGatt(this, false, mGattCallback, TRANSPORT_LE);
+        mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
         Log.d(TAG, "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
         mConnectionState = ConnectionState.CONNECTING;
@@ -416,30 +392,42 @@ public class TSDZBTService extends Service {
      * callback.
      */
     public void readCfg() {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null || tsdz_command_char == null) {
+        if (mBluetoothAdapter == null || mBluetoothGatt == null || tsdz_config_char == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
             return;
         }
+        TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_GET_CONFIG_DATA});
         mBluetoothGatt.readCharacteristic(tsdz_config_char);
     }
 
     public void writeCfg(TSDZ_Config cfg) {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null || tsdz_command_char == null) {
+        if (mBluetoothAdapter == null || mBluetoothGatt == null || tsdz_config_char == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
             return;
         }
-        tsdz_config_char.setValue(cfg.toByteArray());
-        mBluetoothGatt.writeCharacteristic(tsdz_config_char);
+   // send 5 chunks of data
+        for (int i = 0; i < 5; i++) {
+            tsdz_config_char.setValue(cfg.toByteArray());
+            try {
+                //set time in mili
+                Thread.sleep(200);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            mBluetoothGatt.writeCharacteristic(tsdz_config_char);
+       }
+
     }
 
     public void writeCommand(byte[] command) {
         //Log.d(TAG,"Sending command: " + Utils.bytesToHex(command));
-        if (mBluetoothAdapter == null || mBluetoothGatt == null || tsdz_command_char == null) {
+        if (mBluetoothAdapter == null || mBluetoothGatt == null || tsdz_config_char == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
             return;
         }
-        tsdz_command_char.setValue(command);
-        mBluetoothGatt.writeCharacteristic(tsdz_command_char) ;
+        tsdz_config_char.setValue(command);
+        mBluetoothGatt.writeCharacteristic(tsdz_config_char) ;
     }
 
     /**
@@ -463,5 +451,131 @@ public class TSDZBTService extends Service {
         else
             descriptor.setValue(BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE);
         mBluetoothGatt.writeDescriptor(descriptor);
+    }
+
+    public static class NavinfoServiceReceiver  extends BroadcastReceiver {
+
+        private boolean dist_km = false;
+        private boolean total_dist_km = false;
+        int dist_data, total_dist_data;
+
+        private byte[] data = new byte[10];
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String dist = intent.getStringExtra("distance");
+            String total_dist = intent.getStringExtra("total_distance");
+            String command = intent.getStringExtra("command");
+
+            if (command.equals("S") || dist.equals("S") || total_dist.equals("S")) {
+                dist_data = 0x00;
+                total_dist_data = 0x00;
+            }
+            else if (!command.equals("N") || !dist.equals("N") || !total_dist.equals("N")) {
+                if (dist.contains("km")) {
+                    dist_km = true;
+                }else{
+                    dist_km = false;
+                }
+                if (total_dist.contains("km")) {
+                    total_dist_km = true;
+                }else{
+                    total_dist_km = false;
+                }
+
+
+                String arr_dist[] = dist.split(" ");
+                String arr_total_dist[] = total_dist.split(" ");
+
+                if (dist_km) {
+                    arr_dist[0] = arr_dist[0].replace(".",",");
+                    String dist_data_arr[] = arr_dist[0].split(",");
+                    dist_data = Integer.parseInt(dist_data_arr[0]) * 1000 + ((Integer.parseInt(dist_data_arr[1]) * 10));
+                } else {
+                    dist_data = Integer.parseInt(arr_dist[0]);
+                }
+
+                if (total_dist_km) {
+                    arr_total_dist[0] = arr_total_dist[0].replace(".",",");
+
+                    String t_dist_data_arr[] = arr_total_dist[0].split(",");
+
+                    try {
+                        total_dist_data = (Integer.parseInt(t_dist_data_arr[0]) * 1000) + ((Integer.parseInt(t_dist_data_arr[1]) * 10));
+                    }
+                    catch(ArrayIndexOutOfBoundsException exception) {
+                        total_dist_data = (Integer.parseInt(t_dist_data_arr[0]) * 1000);
+                    }
+                } else {
+                    total_dist_data = Integer.parseInt(arr_total_dist[0]);
+                }
+            }else{
+                dist_data = 0x00;
+                total_dist_data = 0x00;
+            }
+
+            data[0] = 0x4F; //"O" Osmand
+            data[1] = (byte) (dist_data & 255);
+            data[2] = (byte) (dist_data >>> 8);
+            data[3] = (byte) (dist_data >>> 16);
+            data[4] = (byte) (total_dist_data & 255);
+            data[5] = (byte) (total_dist_data >>> 8);
+            data[6] = (byte) (total_dist_data >>> 16);
+
+            if (command.equals("left")){
+                data[7] = (byte) (4 & 255);
+                data[8] = (byte) (100 & 255);
+            }else if(command.equals("right")){
+                data[7] = (byte) (6 & 255);
+                data[8] =  0x00;
+            }else if(command.equals("sharp_left")){
+                data[7] = (byte) (1 & 255);
+                data[8] = 0x00;
+            }else if(command.equals("sharp_right")){
+                data[7] = (byte) (3 & 255);
+                data[8] = 0x00;
+            }else if(command.equals("slightly_left")){
+                data[7] = (byte) (7 & 255);
+                data[8] = 0x00;
+            }else if(command.equals("slightly_right")){
+                data[7] = (byte) (9 & 255);
+                data[8] = 0x00;
+            }else if(command.equals("u-turn")){
+                data[7] = (byte) (2 & 255);
+            }else if(command.equals("head")){
+                data[7] = (byte) (8 & 255);
+                data[8] = 0x00;
+            }else if(command.equals("roundabout_1")){
+                data[7] = (byte) (5 & 255);
+                data[8] = (byte) (1 & 255);
+            }else if(command.equals("roundabout_2")){
+                data[7] = (byte) (5 & 255);
+                data[8] = (byte) (2 & 255);
+            }else if(command.equals("roundabout_3")){
+                data[7] = (byte) (5 & 255);
+                data[8] = (byte) (3 & 255);
+            }else if(command.equals("roundabout_4")){
+                data[7] = (byte) (5 & 255);
+                data[8] = (byte) (4 & 255);
+            }else if(command.equals("keep_left")){
+                data[7] = (byte) (7 & 255);
+                data[8] = (byte) (5 & 255);
+            }else if(command.equals("keep_right")){
+                data[7] = (byte) (9 & 255);
+                data[8] = (byte) (6 & 255);
+            }else if(command.equals("S")){          //Navi ends
+                data[7] = 0x00;
+                data[8] = (byte) (255 & 255);
+            }else{
+                data[7] = 0x00;
+                data[8] = 0x00;
+            }
+
+            data[9] = 0x00;
+
+            TSDZBTService.mService.writeCommand(data);
+            // perform action here.
+        }
     }
 }

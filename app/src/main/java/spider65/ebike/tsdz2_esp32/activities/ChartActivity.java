@@ -85,7 +85,7 @@ public class ChartActivity extends AppCompatActivity implements LogManager.LogRe
 
     private enum DataType {
         level, speed,cadence,pPower,mPower,current,
-        volt,energy,mTemp,cTemp,dCycle,erps,
+        volt,energy,mTemp,pedalweight,dCycle,erps,
         foc,pTorque;
 
         public String getName() {
@@ -108,8 +108,8 @@ public class ChartActivity extends AppCompatActivity implements LogManager.LogRe
                     return MyApp.getInstance().getString(R.string.energy_used);
                 case mTemp:
                     return MyApp.getInstance().getString(R.string.motor_temp);
-                case cTemp:
-                    return MyApp.getInstance().getString(R.string.controller_temp);
+                case pedalweight:
+                    return MyApp.getInstance().getString(R.string.pedal_weight);
                 case dCycle:
                     return MyApp.getInstance().getString(R.string.duty_cycle);
                 case erps:
@@ -126,11 +126,11 @@ public class ChartActivity extends AppCompatActivity implements LogManager.LogRe
             DataType.level, DataType.speed, DataType.cadence, DataType.pPower, DataType.mPower,
             DataType.mTemp, DataType.volt, DataType.current, DataType.energy));
     private static final Set<DataType> DEBUG_DATA_TYPES = new HashSet<>(Arrays.asList(
-            DataType.dCycle, DataType.erps, DataType.foc, DataType.pTorque, DataType.cTemp));
+            DataType.dCycle, DataType.erps, DataType.foc, DataType.pTorque, DataType.pedalweight));
     private static final Set<DataType> POWER_DATA_TYPES = new HashSet<>(Arrays.asList(
             DataType.mPower, DataType.pPower));
     private static final Set<DataType> TEMPERATURE_DATA_TYPES = new HashSet<>(Arrays.asList(
-            DataType.mTemp, DataType.cTemp));
+            DataType.mTemp));
 
 
     @Override
@@ -511,8 +511,8 @@ public class ChartActivity extends AppCompatActivity implements LogManager.LogRe
                     case pTorque:
                         y = debugData.get(i).debug.pTorque;
                         break;
-                    case cTemp:
-                        y = debugData.get(i).debug.pcbTemperature;
+                    case pedalweight:
+                        y = debugData.get(i).debug.pedalWeight;
                         break;
                 }
                 if (y > maxY)
@@ -682,7 +682,7 @@ public class ChartActivity extends AppCompatActivity implements LogManager.LogRe
                     numChecked++;
                     if (i.type==DataType.mPower || i.type==DataType.pPower)
                         powerCheched++;
-                    if (i.type==DataType.mTemp || i.type==DataType.cTemp)
+                    if (i.type==DataType.mTemp)
                         temperatureChecked++;
                 }
             }
@@ -726,13 +726,13 @@ public class ChartActivity extends AppCompatActivity implements LogManager.LogRe
             cb.setOnClickListener(v -> {
                 if (((CheckBox)v).isChecked()) {
                     numChecked++;
-                    if (mData[position].type == DataType.mTemp || mData[position].type == DataType.cTemp)
+                    if (mData[position].type == DataType.mTemp)
                         temperatureChecked++;
                     if (mData[position].type == DataType.mPower || mData[position].type == DataType.pPower)
                         powerCheched++;
                 } else {
                     numChecked--;
-                    if (mData[position].type == DataType.mTemp || mData[position].type == DataType.cTemp)
+                    if (mData[position].type == DataType.mTemp)
                         temperatureChecked--;
                     if (mData[position].type == DataType.mPower || mData[position].type == DataType.pPower)
                         powerCheched--;
@@ -749,9 +749,7 @@ public class ChartActivity extends AppCompatActivity implements LogManager.LogRe
             } else if ((powerCheched>0 && (
                             mData[position].type==DataType.mPower ||
                             mData[position].type==DataType.pPower)) ||
-                       (temperatureChecked>0 && (
-                            mData[position].type==DataType.mTemp ||
-                            mData[position].type==DataType.cTemp))) {
+                       (temperatureChecked>0 && (mData[position].type==DataType.mTemp))) {
                 cb.setEnabled(true);
             } else {
                 cb.setEnabled(false);
@@ -772,7 +770,7 @@ public class ChartActivity extends AppCompatActivity implements LogManager.LogRe
                     new DataItem(DataType.volt, false),
                     new DataItem(DataType.energy, false),
                     new DataItem(DataType.mTemp, false),
-                    new DataItem(DataType.cTemp, false),
+                    new DataItem(DataType.pedalweight, false),
                     new DataItem(DataType.dCycle, false),
                     new DataItem(DataType.erps, false),
                     new DataItem(DataType.foc,  false),

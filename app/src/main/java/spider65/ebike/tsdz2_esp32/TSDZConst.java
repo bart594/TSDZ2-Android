@@ -17,20 +17,12 @@ public interface TSDZConst {
 
 
     // BT Command request/notification codes
-    byte CMD_ESP_OTA_START  = 0x01;
-    byte CMD_GET_APP_VERSION = 0x02;
-    byte CMD_STM8S_OTA_START = 0x03;
-    byte CMD_ESP_OTA_STATUS = 0x05;
-    byte CMD_STM8_OTA_STATUS = 0x06;
-    byte CMD_ESP32_CONFIG = 0x08;
-
-    // sub commands of CMD_ESP32_CONFIG
-    byte CONFIG_GET = 0;
-    byte CONFIG_SET = 1;
-
-    // Value ranges for the DS18B20 temperature sensor pin
-    byte MIN_DS18B20_PIN = 3;
-    byte MAX_DS18B20_PIN = 31;
+    byte CMD_GET_CONFIG_DATA = 0x43;  // C
+	byte CMD_SEND_CONFIG_DATA  = 0x53;  // S
+	byte CMD_GET_STATUS_DATA  = 0x52;  //  R
+    byte CMD_GET_DEBUG_DATA  = 0x44;   // D
+    byte CMD_NO_DATA  = 0x4E;   // N
+    byte CMD_CADENCE_CALIBRATION = 0x07;
 
     // size in bytes of the Status/Debug BT notifications
     int DEBUG_ADV_SIZE = 16;

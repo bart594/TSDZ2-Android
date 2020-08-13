@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,10 +18,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import spider65.ebike.tsdz2_esp32.R;
 import spider65.ebike.tsdz2_esp32.TSDZBTService;
+import spider65.ebike.tsdz2_esp32.TSDZConst;
 import spider65.ebike.tsdz2_esp32.data.TSDZ_Config;
 import spider65.ebike.tsdz2_esp32.databinding.ActivityLevelsSetupBinding;
 
-import static spider65.ebike.tsdz2_esp32.TSDZConst.PWM_DUTY_CYCLE_MAX;
 import static spider65.ebike.tsdz2_esp32.TSDZConst.WALK_ASSIST_DUTY_CYCLE_MAX;
 
 public class LevelsSetupActivity extends AppCompatActivity {
@@ -28,7 +30,7 @@ public class LevelsSetupActivity extends AppCompatActivity {
     private TSDZ_Config cfg = new TSDZ_Config();
     private IntentFilter mIntentFilter = new IntentFilter();
     private ActivityLevelsSetupBinding binding;
-
+    SeekBar.OnSeekBarChangeListener mlistener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,192 @@ public class LevelsSetupActivity extends AppCompatActivity {
         binding.setHandler(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SeekBar seekBarAssistLevelsNumber = findViewById(R.id.seekBarAssistLevelsNumber);
+        TextView SeekBarValueAssistLevelsNumber = findViewById(R.id.TxtviewSeekBarAssistLevelsNumber);
+        SeekBar seekBareMTBLevel = findViewById(R.id.seekBareMTBLevel);
+        TextView SeekBarValueeMTBLevel = findViewById(R.id.TxtviewSeekBareMTBLevel);
+        SeekBar seekBarTorqueRPMLimit = findViewById(R.id.seekBarTorqueRPMLimit);
+        TextView SeekBarValueTorqueRPMLimit = findViewById(R.id.TxtviewSeekBarTorqueRPMLimit);
+        SeekBar seekBarTorqueBoostFactor = findViewById(R.id.seekBarTorqueBoostFactor);
+        TextView SeekBarValueTorqueBoostFactor = findViewById(R.id.TxtviewSeekBarTorqueBoostFactor);
+
+        SeekBar seekBarAssistLevel1 = findViewById(R.id.seekBarAssistLevel1);
+        TextView SeekBarValueAssistLevel1 = findViewById(R.id.TxtviewSeekBarAssistLevel1);
+        SeekBar seekBarAccelerationLevel1 = findViewById(R.id.seekBarAccelerationLevel1);
+        TextView SeekBarValueAccelerationLevel1 = findViewById(R.id.TxtviewSeekBarAccelerationLevel1);
+        SeekBar seekBarPeakPowerLevel1 = findViewById(R.id.seekBarPeakPowerLevel1);
+        TextView SeekBarValuePeakPowerLevel1 = findViewById(R.id.TxtviewSeekBarPeakPowerLevel1);
+
+        SeekBar seekBarAssistLevel2 = findViewById(R.id.seekBarAssistLevel2);
+        TextView SeekBarValueAssistLevel2 = findViewById(R.id.TxtviewSeekBarAssistLevel2);
+        SeekBar seekBarAccelerationLevel2 = findViewById(R.id.seekBarAccelerationLevel2);
+        TextView SeekBarValueAccelerationLevel2 = findViewById(R.id.TxtviewSeekBarAccelerationLevel2);
+        SeekBar seekBarPeakPowerLevel2 = findViewById(R.id.seekBarPeakPowerLevel2);
+        TextView SeekBarValuePeakPowerLevel2 = findViewById(R.id.TxtviewSeekBarPeakPowerLevel2);
+
+        SeekBar seekBarAssistLevel3 = findViewById(R.id.seekBarAssistLevel3);
+        TextView SeekBarValueAssistLevel3 = findViewById(R.id.TxtviewSeekBarAssistLevel3);
+        SeekBar seekBarAccelerationLevel3 = findViewById(R.id.seekBarAccelerationLevel3);
+        TextView SeekBarValueAccelerationLevel3 = findViewById(R.id.TxtviewSeekBarAccelerationLevel3);
+        SeekBar seekBarPeakPowerLevel3 = findViewById(R.id.seekBarPeakPowerLevel3);
+        TextView SeekBarValuePeakPowerLevel3 = findViewById(R.id.TxtviewSeekBarPeakPowerLevel3);
+
+        SeekBar seekBarAssistLevel4 = findViewById(R.id.seekBarAssistLevel4);
+        TextView SeekBarValueAssistLevel4 = findViewById(R.id.TxtviewSeekBarAssistLevel4);
+        SeekBar seekBarAccelerationLevel4 = findViewById(R.id.seekBarAccelerationLevel4);
+        TextView SeekBarValueAccelerationLevel4 = findViewById(R.id.TxtviewSeekBarAccelerationLevel4);
+        SeekBar seekBarPeakPowerLevel4 = findViewById(R.id.seekBarPeakPowerLevel4);
+        TextView SeekBarValuePeakPowerLevel4 = findViewById(R.id.TxtviewSeekBarPeakPowerLevel4);
+
+        SeekBar seekBarAssistLevel5 = findViewById(R.id.seekBarAssistLevel5);
+        TextView SeekBarValueAssistLevel5 = findViewById(R.id.TxtviewSeekBarAssistLevel5);
+        SeekBar seekBarAccelerationLevel5 = findViewById(R.id.seekBarAccelerationLevel5);
+        TextView SeekBarValueAccelerationLevel5 = findViewById(R.id.TxtviewSeekBarAccelerationLevel5);
+        SeekBar seekBarPeakPowerLevel5 = findViewById(R.id.seekBarPeakPowerLevel5);
+        TextView SeekBarValuePeakPowerLevel5 = findViewById(R.id.TxtviewSeekBarPeakPowerLevel5);
+
+        SeekBar seekBarWalkAssistLevel1 = findViewById(R.id.seekBarWalkAssistLevel1);
+        TextView SeekBarValueWalkAssistLevel1 = findViewById(R.id.TxtviewSeekBarWalkAssistLevel1);
+        SeekBar seekBarWalkAssistLevel2 = findViewById(R.id.seekBarWalkAssistLevel2);
+        TextView SeekBarValueWalkAssistLevel2 = findViewById(R.id.TxtviewSeekBarWalkAssistLevel2);
+        SeekBar seekBarWalkAssistLevel3 = findViewById(R.id.seekBarWalkAssistLevel3);
+        TextView SeekBarValueWalkAssistLevel3 = findViewById(R.id.TxtviewSeekBarWalkAssistLevel3);
+        SeekBar seekBarWalkAssistLevel4 = findViewById(R.id.seekBarWalkAssistLevel4);
+        TextView SeekBarValueWalkAssistLevel4 = findViewById(R.id.TxtviewSeekBarWalkAssistLevel4);
+        SeekBar seekBarWalkAssistLevel5 = findViewById(R.id.seekBarWalkAssistLevel5);
+        TextView SeekBarValueWalkAssistLevel5 = findViewById(R.id.TxtviewSeekBarWalkAssistLevel5);
+
+        mlistener = new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                switch (seekBar.getId()) {
+                    case R.id.seekBarAssistLevelsNumber:
+                        SeekBarValueAssistLevelsNumber.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBareMTBLevel:
+                        SeekBarValueeMTBLevel.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarTorqueRPMLimit:
+                        SeekBarValueTorqueRPMLimit.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarTorqueBoostFactor:
+                        SeekBarValueTorqueBoostFactor.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarAssistLevel1:
+                        int assist_progress_custom_1 =  progress * 10;
+                        SeekBarValueAssistLevel1.setText(String.valueOf(assist_progress_custom_1));
+                        break;
+                    case R.id.seekBarAccelerationLevel1:
+                        SeekBarValueAccelerationLevel1.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarPeakPowerLevel1:
+                        int progress_custom1 =  progress * 25;
+                        SeekBarValuePeakPowerLevel1.setText(String.valueOf(progress_custom1));
+                        break;
+                    case R.id.seekBarAssistLevel2:
+                        int assist_progress_custom_2 =  progress * 10;
+                        SeekBarValueAssistLevel2.setText(String.valueOf(assist_progress_custom_2));
+                        break;
+                    case R.id.seekBarAccelerationLevel2:
+                        SeekBarValueAccelerationLevel2.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarPeakPowerLevel2:
+                        int progress_custom2 =  progress * 25;
+                        SeekBarValuePeakPowerLevel2.setText(String.valueOf(progress_custom2));
+                        break;
+                    case R.id.seekBarAssistLevel3:
+                        int assist_progress_custom_3 =  progress * 10;
+                        SeekBarValueAssistLevel3.setText(String.valueOf(assist_progress_custom_3));
+                        break;
+                    case R.id.seekBarAccelerationLevel3:
+                        SeekBarValueAccelerationLevel3.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarPeakPowerLevel3:
+                        int progress_custom3 =  progress * 25;
+                        SeekBarValuePeakPowerLevel3.setText(String.valueOf(progress_custom3));
+                        break;
+                    case R.id.seekBarAssistLevel4:
+                        int assist_progress_custom_4 =  progress * 10;
+                        SeekBarValueAssistLevel4.setText(String.valueOf(assist_progress_custom_4));
+                        break;
+                    case R.id.seekBarAccelerationLevel4:
+                        SeekBarValueAccelerationLevel4.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarPeakPowerLevel4:
+                        int progress_custom4 =  progress * 25;
+                        SeekBarValuePeakPowerLevel4.setText(String.valueOf(progress_custom4));
+                        break;
+                    case R.id.seekBarAssistLevel5:
+                        int assist_progress_custom_5 =  progress * 10;
+                        SeekBarValueAssistLevel5.setText(String.valueOf(assist_progress_custom_5));
+                        break;
+                    case R.id.seekBarAccelerationLevel5:
+                        SeekBarValueAccelerationLevel5.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarPeakPowerLevel5:
+                        int progress_custom5 =  progress * 25;
+                        SeekBarValuePeakPowerLevel5.setText(String.valueOf(progress_custom5));
+                        break;
+                    case R.id.seekBarWalkAssistLevel1:
+                        SeekBarValueWalkAssistLevel1.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarWalkAssistLevel2:
+                        SeekBarValueWalkAssistLevel2.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarWalkAssistLevel3:
+                        SeekBarValueWalkAssistLevel3.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarWalkAssistLevel4:
+                        SeekBarValueWalkAssistLevel4.setText(String.valueOf(progress));
+                        break;
+                    case R.id.seekBarWalkAssistLevel5:
+                        SeekBarValueWalkAssistLevel5.setText(String.valueOf(progress));
+                        break;
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        };
+
+        seekBarAssistLevelsNumber.setOnSeekBarChangeListener(mlistener);
+        seekBareMTBLevel.setOnSeekBarChangeListener(mlistener);
+        seekBarTorqueRPMLimit.setOnSeekBarChangeListener(mlistener);
+        seekBarTorqueBoostFactor.setOnSeekBarChangeListener(mlistener);
+
+        seekBarAssistLevel1.setOnSeekBarChangeListener(mlistener);
+        seekBarAccelerationLevel1.setOnSeekBarChangeListener(mlistener);
+        seekBarPeakPowerLevel1.setOnSeekBarChangeListener(mlistener);
+
+        seekBarAssistLevel2.setOnSeekBarChangeListener(mlistener);
+        seekBarAccelerationLevel2.setOnSeekBarChangeListener(mlistener);
+        seekBarPeakPowerLevel2.setOnSeekBarChangeListener(mlistener);
+
+        seekBarAssistLevel3.setOnSeekBarChangeListener(mlistener);
+        seekBarAccelerationLevel3.setOnSeekBarChangeListener(mlistener);
+        seekBarPeakPowerLevel3.setOnSeekBarChangeListener(mlistener);
+
+        seekBarAssistLevel4.setOnSeekBarChangeListener(mlistener);
+        seekBarAccelerationLevel4.setOnSeekBarChangeListener(mlistener);
+        seekBarPeakPowerLevel4.setOnSeekBarChangeListener(mlistener);
+
+        seekBarAssistLevel5.setOnSeekBarChangeListener(mlistener);
+        seekBarAccelerationLevel5.setOnSeekBarChangeListener(mlistener);
+        seekBarPeakPowerLevel5.setOnSeekBarChangeListener(mlistener);
+
+        seekBarWalkAssistLevel1.setOnSeekBarChangeListener(mlistener);
+        seekBarWalkAssistLevel2.setOnSeekBarChangeListener(mlistener);
+        seekBarWalkAssistLevel3.setOnSeekBarChangeListener(mlistener);
+        seekBarWalkAssistLevel4.setOnSeekBarChangeListener(mlistener);
+        seekBarWalkAssistLevel5.setOnSeekBarChangeListener(mlistener);
 
         mIntentFilter.addAction(TSDZBTService.TSDZ_CFG_READ_BROADCAST);
         mIntentFilter.addAction(TSDZBTService.TSDZ_CFG_WRITE_BROADCAST);
@@ -72,137 +260,39 @@ public class LevelsSetupActivity extends AppCompatActivity {
     }
 
     private void saveCfg() {
-        Integer val1,val2,val3,val4;
 
-        if ((val1 = checkRange(binding.eMTBAssist1ET, 1, 20)) == null) {
-            showDialog(getString(R.string.emtb_assit_level_1), getString(R.string.range_error, 1, 20));
-            return;
-        }
-        if ((val2 = checkRange(binding.eMTBAssist2ET, 1, 20)) == null) {
-            showDialog(getString(R.string.emtb_assit_level_2), getString(R.string.range_error, 1, 20));
-            return;
-        }
-        if ((val3 = checkRange(binding.eMTBAssist3ET, 1, 20)) == null) {
-            showDialog(getString(R.string.emtb_assit_level_3), getString(R.string.range_error, 1, 20));
-            return;
-        }
-        if ((val4 = checkRange(binding.eMTBAssist4ET, 1, 20)) == null) {
-            showDialog(getString(R.string.emtb_assit_level_4), getString(R.string.range_error, 1, 20));
-            return;
-        }
-        if (val2>val1 && val3>val2 && val4>val3) {
-            cfg.ui8_eMTB_assist_level[0] = val1;
-            cfg.ui8_eMTB_assist_level[1] = val2;
-            cfg.ui8_eMTB_assist_level[2] = val3;
-            cfg.ui8_eMTB_assist_level[3] = val4;
-        } else {
-            showDialog(getString(R.string.eMTB_mode), getString(R.string.level_error));
-            return;
-        }
+        cfg.ui8_number_of_assist_levels =  binding.seekBarAssistLevelsNumber.getProgress();
+        cfg.ui8_eMTB_assist_level =  binding.seekBareMTBLevel.getProgress();
+        cfg.ui8_cadence_RPM_limit = binding.seekBarTorqueRPMLimit.getProgress();
+        cfg.ui8_torque_boost_factor = binding.seekBarTorqueBoostFactor.getProgress();
 
-        if ((val1 = checkRange(binding.powerAssist1ET, 1, 100)) == null) {
-            showDialog(getString(R.string.power_assist_level_1), getString(R.string.range_error, 1, 100));
-            return;
-        }
-        if ((val2 = checkRange(binding.powerAssist2ET, 1, 100)) == null) {
-            showDialog(getString(R.string.power_assist_level_2), getString(R.string.range_error, 1, 100));
-            return;
-        }
-        if ((val3 = checkRange(binding.powerAssist3ET, 1, 100)) == null) {
-            showDialog(getString(R.string.power_assist_level_3), getString(R.string.range_error, 1, 100));
-            return;
-        }
-        if ((val4 = checkRange(binding.powerAssist4ET, 1, 100)) == null) {
-            showDialog(getString(R.string.power_assist_level_4), getString(R.string.range_error, 1, 100));
-            return;
-        }
-        if (val2>val1 && val3>val2 && val4>val3) {
-            cfg.ui8_power_assist_level[0] = val1;
-            cfg.ui8_power_assist_level[1] = val2;
-            cfg.ui8_power_assist_level[2] = val3;
-            cfg.ui8_power_assist_level[3] = val4;
-        } else {
-            showDialog(getString(R.string.power_mode), getString(R.string.level_error));
-            return;
-        }
+        cfg.ui8_power_assist_level[0] = binding.seekBarAssistLevel1.getProgress();
+        cfg.ui8_motor_acceleration_level[0] = binding.seekBarAccelerationLevel1.getProgress();
+        cfg.ui8_target_peak_battery_power_div25[0] = binding.seekBarPeakPowerLevel1.getProgress();
 
-        if ((val1 = checkRange(binding.torqueAssist1ET, 1, 100)) == null) {
-            showDialog(getString(R.string.torque_assist_level_1), getString(R.string.range_error, 1, 100));
-            return;
-        }
-        if ((val2 = checkRange(binding.torqueAssist2ET, 1, 100)) == null) {
-            showDialog(getString(R.string.torque_assist_level_2), getString(R.string.range_error, 1, 100));
-            return;
-        }
-        if ((val3 = checkRange(binding.torqueAssist3ET, 1, 100)) == null) {
-            showDialog(getString(R.string.torque_assist_level_3), getString(R.string.range_error, 1, 100));
-            return;
-        }
-        if ((val4 = checkRange(binding.torqueAssist4ET, 1, 100)) == null) {
-            showDialog(getString(R.string.torque_assist_level_4), getString(R.string.range_error, 1, 100));
-            return;
-        }
-        if (val2>val1 && val3>val2 && val4>val3) {
-            cfg.ui8_torque_assist_level[0] = val1;
-            cfg.ui8_torque_assist_level[1] = val2;
-            cfg.ui8_torque_assist_level[2] = val3;
-            cfg.ui8_torque_assist_level[3] = val4;
-        } else {
-            showDialog(getString(R.string.torque_mode), getString(R.string.level_error));
-            return;
-        }
+        cfg.ui8_power_assist_level[1] = binding.seekBarAssistLevel2.getProgress();
+        cfg.ui8_motor_acceleration_level[1] = binding.seekBarAccelerationLevel2.getProgress();
+        cfg.ui8_target_peak_battery_power_div25[1] = binding.seekBarPeakPowerLevel2.getProgress();
 
-        if ((val1 = checkRange(binding.cadenceAssist1ET, 1, PWM_DUTY_CYCLE_MAX)) == null) {
-            showDialog(getString(R.string.cadence_assist_level_1), getString(R.string.range_error, 1, PWM_DUTY_CYCLE_MAX));
-            return;
-        }
-        if ((val2 = checkRange(binding.cadenceAssist2ET, 1, PWM_DUTY_CYCLE_MAX)) == null) {
-            showDialog(getString(R.string.cadence_assist_level_2), getString(R.string.range_error, 1, PWM_DUTY_CYCLE_MAX));
-            return;
-        }
-        if ((val3 = checkRange(binding.cadenceAssist3ET, 1, PWM_DUTY_CYCLE_MAX)) == null) {
-            showDialog(getString(R.string.cadence_assist_level_3), getString(R.string.range_error, 1, PWM_DUTY_CYCLE_MAX));
-            return;
-        }
-        if ((val4 = checkRange(binding.cadenceAssist4ET, 1, PWM_DUTY_CYCLE_MAX)) == null) {
-            showDialog(getString(R.string.cadence_assist_level_4), getString(R.string.range_error, 1, PWM_DUTY_CYCLE_MAX));
-            return;
-        }
-        if (val2>val1 && val3>val2 && val4>val3) {
-            cfg.ui8_cadence_assist_level[0] = val1;
-            cfg.ui8_cadence_assist_level[1] = val2;
-            cfg.ui8_cadence_assist_level[2] = val3;
-            cfg.ui8_cadence_assist_level[3] = val4;
-        } else {
-            showDialog(getString(R.string.cadence_mode), getString(R.string.level_error));
-            return;
-        }
+        cfg.ui8_power_assist_level[2] = binding.seekBarAssistLevel3.getProgress();
+        cfg.ui8_motor_acceleration_level[2] = binding.seekBarAccelerationLevel3.getProgress();
+        cfg.ui8_target_peak_battery_power_div25[2] = binding.seekBarPeakPowerLevel3.getProgress();
 
-        if ((val1 = checkRange(binding.walkAssist1ET, 1, WALK_ASSIST_DUTY_CYCLE_MAX)) == null) {
-            showDialog(getString(R.string.walk_assist_level_1), getString(R.string.range_error, 1, WALK_ASSIST_DUTY_CYCLE_MAX));
-            return;
-        }
-        if ((val2 = checkRange(binding.walkAssist2ET, 1, WALK_ASSIST_DUTY_CYCLE_MAX)) == null) {
-            showDialog(getString(R.string.walk_assist_level_2), getString(R.string.range_error, 1, WALK_ASSIST_DUTY_CYCLE_MAX));
-            return;
-        }
-        if ((val3 = checkRange(binding.walkAssist3ET, 1, WALK_ASSIST_DUTY_CYCLE_MAX)) == null) {
-            showDialog(getString(R.string.walk_assist_level_3), getString(R.string.range_error, 1, WALK_ASSIST_DUTY_CYCLE_MAX));
-            return;
-        }
-        if ((val4 = checkRange(binding.walkAssist4ET, 1, WALK_ASSIST_DUTY_CYCLE_MAX)) == null) {
-            showDialog(getString(R.string.walk_assist_level_4), getString(R.string.range_error, 1, WALK_ASSIST_DUTY_CYCLE_MAX));
-            return;
-        }
-        if (val2>val1 && val3>val2 && val4>val3) {
-            cfg.ui8_walk_assist_level[0] = val1;
-            cfg.ui8_walk_assist_level[1] = val2;
-            cfg.ui8_walk_assist_level[2] = val3;
-            cfg.ui8_walk_assist_level[3] = val4;
-        } else {
-            showDialog(getString(R.string.walk_mode), getString(R.string.level_error));
-            return;
-        }
+        cfg.ui8_power_assist_level[3] = binding.seekBarAssistLevel4.getProgress();
+        cfg.ui8_motor_acceleration_level[3] = binding.seekBarAccelerationLevel4.getProgress();
+        cfg.ui8_target_peak_battery_power_div25[3] = binding.seekBarPeakPowerLevel4.getProgress();
+
+        cfg.ui8_power_assist_level[4] = binding.seekBarAssistLevel5.getProgress();
+        cfg.ui8_motor_acceleration_level[4] = binding.seekBarAccelerationLevel5.getProgress();
+        cfg.ui8_target_peak_battery_power_div25[4] = binding.seekBarPeakPowerLevel5.getProgress();
+
+
+        cfg.ui8_walk_assist_level[0] = binding.seekBarWalkAssistLevel1.getProgress();
+        cfg.ui8_walk_assist_level[1] = binding.seekBarWalkAssistLevel2.getProgress();
+        cfg.ui8_walk_assist_level[2] = binding.seekBarWalkAssistLevel3.getProgress();
+        cfg.ui8_walk_assist_level[3] = binding.seekBarWalkAssistLevel4.getProgress();
+        cfg.ui8_walk_assist_level[4] = binding.seekBarWalkAssistLevel5.getProgress();
+
 
         TSDZBTService service = TSDZBTService.getBluetoothService();
         if (service != null && service.getConnectionStatus() == TSDZBTService.ConnectionState.CONNECTED)
@@ -240,6 +330,7 @@ public class LevelsSetupActivity extends AppCompatActivity {
             case TSDZBTService.TSDZ_CFG_READ_BROADCAST:
                 if (cfg.setData(intent.getByteArrayExtra(TSDZBTService.VALUE_EXTRA)))
                     binding.setCfg(cfg);
+                    TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_NO_DATA});
                 break;
             case TSDZBTService.TSDZ_CFG_WRITE_BROADCAST:
                 if (intent.getBooleanExtra(TSDZBTService.VALUE_EXTRA,false))
