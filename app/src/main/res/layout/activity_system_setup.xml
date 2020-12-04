@@ -308,6 +308,21 @@
                         android:text="@string/torque_sensor_calib" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/SoftStartModeCB"
+                        android:layout_width="228dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:checked="@{cfg.ui8_soft_start_feature_enabled}"
+                        android:text="Soft Start Feature" />
+                </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"

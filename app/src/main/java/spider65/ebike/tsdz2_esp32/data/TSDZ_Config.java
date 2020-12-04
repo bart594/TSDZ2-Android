@@ -57,6 +57,7 @@ public class TSDZ_Config  {
     public int ui8_eMTB_assist_level;
     public int[] ui8_motor_acceleration_level = new int[5];
     public int[] ui8_power_assist_level = new int[5];
+    public int[] ui8_torque_assist_level = new int[5];
     public int[] ui8_target_peak_battery_power_div25 = new int[5];
     public int[] ui8_walk_assist_level = new int[5];
     public int[][] ui16_torque_sensor_calibration = new int[6][2];
@@ -67,7 +68,7 @@ public class TSDZ_Config  {
     public boolean ui8_field_weakening_enabled;
     public int ui8_field_weakening_current;
     public int ui8_cadence_RPM_limit;
-    public int ui8_torque_boost_factor;
+    public boolean ui8_soft_start_feature_enabled;
     public int  ui8_number_of_assist_levels;
 
     private boolean first_data_chunk = true;
@@ -147,7 +148,7 @@ public class TSDZ_Config  {
             ui8_field_weakening_enabled = (data[10] & 255) != 0;
             ui8_field_weakening_current = (data[11] & 255);
             ui8_cadence_RPM_limit = (data[12] & 255);
-            ui8_torque_boost_factor = (data[13] & 255);
+            ui8_soft_start_feature_enabled = (data[13] & 255) != 0;
             ui8_battery_soc_enable = (data[14] & 255);
             return false;
         }else if(data[1] == 3) {
@@ -161,8 +162,10 @@ public class TSDZ_Config  {
         }else if(data[1] == 4) {
             for (int i = 0; i < 5; i++)
                 ui8_power_assist_level[i] = (data[2 + i] & 255);
-                ui32_wh_x10_100_percent = (data[7] & 255) + ((data[8] & 255) << 8)  + ((data[9] & 255) << 16);
-                ui32_wh_x10_offset = (data[10] & 255) + ((data[11] & 255) << 8)  + ((data[12] & 255) << 16);
+            for (int i = 0; i < 5; i++)
+                ui8_torque_assist_level[i] = (data[7 + i] & 255);
+                ui32_wh_x10_100_percent = (data[12] & 255) + ((data[13] & 255) << 8)  + ((data[14] & 255) << 16);
+                ui32_wh_x10_offset = (data[15] & 255) + ((data[16] & 255) << 8)  + ((data[17] & 255) << 16);
             return false;
         }else if(data[1] == 5) {
             for (int i = 0; i < 6; i++)
@@ -226,7 +229,7 @@ public class TSDZ_Config  {
             data[10] = (byte) (ui8_field_weakening_enabled? 1 : 0);
             data[11] = (byte) ui8_field_weakening_current;
             data[12] = (byte) ui8_cadence_RPM_limit;
-            data[13] = (byte) ui8_torque_boost_factor;
+            data[13] = (byte) (ui8_soft_start_feature_enabled ? 1 : 0);
             data[14] = (byte) ui8_battery_soc_enable;
             return data;
 
@@ -252,12 +255,14 @@ public class TSDZ_Config  {
             data[1] = 4;                            //fourth chunk of config data
             for (int i = 0; i < 5; i++)
                 data[2 + i] = (byte) ui8_power_assist_level[i];
-            data[7] = (byte) ui32_wh_x10_100_percent;
-            data[8] = (byte) (ui32_wh_x10_100_percent >>> 8);
-            data[9] = (byte) (ui32_wh_x10_100_percent >>> 16);
-            data[10] = (byte) ui32_wh_x10_offset;
-            data[11] = (byte) (ui32_wh_x10_offset >>> 8);
-            data[12] = (byte) (ui32_wh_x10_offset >>> 16);
+            for (int i = 0; i < 5; i++)
+                data[7 + i] = (byte) ui8_torque_assist_level[i];
+            data[12] = (byte) ui32_wh_x10_100_percent;
+            data[13] = (byte) (ui32_wh_x10_100_percent >>> 8);
+            data[14] = (byte) (ui32_wh_x10_100_percent >>> 16);
+            data[15] = (byte) ui32_wh_x10_offset;
+            data[16] = (byte) (ui32_wh_x10_offset >>> 8);
+            data[17] = (byte) (ui32_wh_x10_offset >>> 16);
 
             return data;
 

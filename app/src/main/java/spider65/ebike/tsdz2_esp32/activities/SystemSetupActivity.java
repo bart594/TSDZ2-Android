@@ -231,6 +231,9 @@ public class SystemSetupActivity extends AppCompatActivity {
         checked = binding.torquecalibModeCB.isChecked();
         cfg.ui8_torque_sensor_calibration_feature_enabled = checked;
 
+        checked = binding.SoftStartModeCB.isChecked();
+        cfg.ui8_soft_start_feature_enabled = checked;
+
         if ((val = checkRange(binding.wheelPerimeterET, 1000, 2500)) == null) {
             showDialog(getString(R.string.wheel_perimeter), getString(R.string.range_error, 1000, 2500));
             return;

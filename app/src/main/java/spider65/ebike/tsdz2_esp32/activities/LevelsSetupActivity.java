@@ -46,11 +46,12 @@ public class LevelsSetupActivity extends AppCompatActivity {
         TextView SeekBarValueeMTBLevel = findViewById(R.id.TxtviewSeekBareMTBLevel);
         SeekBar seekBarTorqueRPMLimit = findViewById(R.id.seekBarTorqueRPMLimit);
         TextView SeekBarValueTorqueRPMLimit = findViewById(R.id.TxtviewSeekBarTorqueRPMLimit);
-        SeekBar seekBarTorqueBoostFactor = findViewById(R.id.seekBarTorqueBoostFactor);
-        TextView SeekBarValueTorqueBoostFactor = findViewById(R.id.TxtviewSeekBarTorqueBoostFactor);
+
 
         SeekBar seekBarAssistLevel1 = findViewById(R.id.seekBarAssistLevel1);
         TextView SeekBarValueAssistLevel1 = findViewById(R.id.TxtviewSeekBarAssistLevel1);
+        SeekBar seekBarTorqueAssistLevel1 = findViewById(R.id.seekBarTorqueAssistLevel1);
+        TextView SeekBarValueTorqueAssistLevel1 = findViewById(R.id.TxtviewSeekBarTorqueAssistLevel1);
         SeekBar seekBarAccelerationLevel1 = findViewById(R.id.seekBarAccelerationLevel1);
         TextView SeekBarValueAccelerationLevel1 = findViewById(R.id.TxtviewSeekBarAccelerationLevel1);
         SeekBar seekBarPeakPowerLevel1 = findViewById(R.id.seekBarPeakPowerLevel1);
@@ -58,6 +59,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
 
         SeekBar seekBarAssistLevel2 = findViewById(R.id.seekBarAssistLevel2);
         TextView SeekBarValueAssistLevel2 = findViewById(R.id.TxtviewSeekBarAssistLevel2);
+        SeekBar seekBarTorqueAssistLevel2 = findViewById(R.id.seekBarTorqueAssistLevel2);
+        TextView SeekBarValueTorqueAssistLevel2 = findViewById(R.id.TxtviewSeekBarTorqueAssistLevel2);
         SeekBar seekBarAccelerationLevel2 = findViewById(R.id.seekBarAccelerationLevel2);
         TextView SeekBarValueAccelerationLevel2 = findViewById(R.id.TxtviewSeekBarAccelerationLevel2);
         SeekBar seekBarPeakPowerLevel2 = findViewById(R.id.seekBarPeakPowerLevel2);
@@ -65,6 +68,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
 
         SeekBar seekBarAssistLevel3 = findViewById(R.id.seekBarAssistLevel3);
         TextView SeekBarValueAssistLevel3 = findViewById(R.id.TxtviewSeekBarAssistLevel3);
+        SeekBar seekBarTorqueAssistLevel3 = findViewById(R.id.seekBarTorqueAssistLevel3);
+        TextView SeekBarValueTorqueAssistLevel3 = findViewById(R.id.TxtviewSeekBarTorqueAssistLevel3);
         SeekBar seekBarAccelerationLevel3 = findViewById(R.id.seekBarAccelerationLevel3);
         TextView SeekBarValueAccelerationLevel3 = findViewById(R.id.TxtviewSeekBarAccelerationLevel3);
         SeekBar seekBarPeakPowerLevel3 = findViewById(R.id.seekBarPeakPowerLevel3);
@@ -72,6 +77,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
 
         SeekBar seekBarAssistLevel4 = findViewById(R.id.seekBarAssistLevel4);
         TextView SeekBarValueAssistLevel4 = findViewById(R.id.TxtviewSeekBarAssistLevel4);
+        SeekBar seekBarTorqueAssistLevel4 = findViewById(R.id.seekBarTorqueAssistLevel4);
+        TextView SeekBarValueTorqueAssistLevel4 = findViewById(R.id.TxtviewSeekBarTorqueAssistLevel4);
         SeekBar seekBarAccelerationLevel4 = findViewById(R.id.seekBarAccelerationLevel4);
         TextView SeekBarValueAccelerationLevel4 = findViewById(R.id.TxtviewSeekBarAccelerationLevel4);
         SeekBar seekBarPeakPowerLevel4 = findViewById(R.id.seekBarPeakPowerLevel4);
@@ -79,6 +86,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
 
         SeekBar seekBarAssistLevel5 = findViewById(R.id.seekBarAssistLevel5);
         TextView SeekBarValueAssistLevel5 = findViewById(R.id.TxtviewSeekBarAssistLevel5);
+        SeekBar seekBarTorqueAssistLevel5 = findViewById(R.id.seekBarTorqueAssistLevel5);
+        TextView SeekBarValueTorqueAssistLevel5 = findViewById(R.id.TxtviewSeekBarTorqueAssistLevel5);
         SeekBar seekBarAccelerationLevel5 = findViewById(R.id.seekBarAccelerationLevel5);
         TextView SeekBarValueAccelerationLevel5 = findViewById(R.id.TxtviewSeekBarAccelerationLevel5);
         SeekBar seekBarPeakPowerLevel5 = findViewById(R.id.seekBarPeakPowerLevel5);
@@ -108,12 +117,12 @@ public class LevelsSetupActivity extends AppCompatActivity {
                     case R.id.seekBarTorqueRPMLimit:
                         SeekBarValueTorqueRPMLimit.setText(String.valueOf(progress));
                         break;
-                    case R.id.seekBarTorqueBoostFactor:
-                        SeekBarValueTorqueBoostFactor.setText(String.valueOf(progress));
-                        break;
                     case R.id.seekBarAssistLevel1:
                         int assist_progress_custom_1 =  progress * 10;
                         SeekBarValueAssistLevel1.setText(String.valueOf(assist_progress_custom_1));
+                        break;
+                    case R.id.seekBarTorqueAssistLevel1:
+                        SeekBarValueTorqueAssistLevel1.setText(String.valueOf(progress));
                         break;
                     case R.id.seekBarAccelerationLevel1:
                         SeekBarValueAccelerationLevel1.setText(String.valueOf(progress));
@@ -126,6 +135,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
                         int assist_progress_custom_2 =  progress * 10;
                         SeekBarValueAssistLevel2.setText(String.valueOf(assist_progress_custom_2));
                         break;
+                    case R.id.seekBarTorqueAssistLevel2:
+                        SeekBarValueTorqueAssistLevel2.setText(String.valueOf(progress));
                     case R.id.seekBarAccelerationLevel2:
                         SeekBarValueAccelerationLevel2.setText(String.valueOf(progress));
                         break;
@@ -137,6 +148,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
                         int assist_progress_custom_3 =  progress * 10;
                         SeekBarValueAssistLevel3.setText(String.valueOf(assist_progress_custom_3));
                         break;
+                    case R.id.seekBarTorqueAssistLevel3:
+                        SeekBarValueTorqueAssistLevel3.setText(String.valueOf(progress));
                     case R.id.seekBarAccelerationLevel3:
                         SeekBarValueAccelerationLevel3.setText(String.valueOf(progress));
                         break;
@@ -148,6 +161,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
                         int assist_progress_custom_4 =  progress * 10;
                         SeekBarValueAssistLevel4.setText(String.valueOf(assist_progress_custom_4));
                         break;
+                    case R.id.seekBarTorqueAssistLevel4:
+                        SeekBarValueTorqueAssistLevel4.setText(String.valueOf(progress));
                     case R.id.seekBarAccelerationLevel4:
                         SeekBarValueAccelerationLevel4.setText(String.valueOf(progress));
                         break;
@@ -159,6 +174,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
                         int assist_progress_custom_5 =  progress * 10;
                         SeekBarValueAssistLevel5.setText(String.valueOf(assist_progress_custom_5));
                         break;
+                    case R.id.seekBarTorqueAssistLevel5:
+                        SeekBarValueTorqueAssistLevel5.setText(String.valueOf(progress));
                     case R.id.seekBarAccelerationLevel5:
                         SeekBarValueAccelerationLevel5.setText(String.valueOf(progress));
                         break;
@@ -198,25 +215,30 @@ public class LevelsSetupActivity extends AppCompatActivity {
         seekBarAssistLevelsNumber.setOnSeekBarChangeListener(mlistener);
         seekBareMTBLevel.setOnSeekBarChangeListener(mlistener);
         seekBarTorqueRPMLimit.setOnSeekBarChangeListener(mlistener);
-        seekBarTorqueBoostFactor.setOnSeekBarChangeListener(mlistener);
+
 
         seekBarAssistLevel1.setOnSeekBarChangeListener(mlistener);
+        seekBarTorqueAssistLevel1.setOnSeekBarChangeListener(mlistener);
         seekBarAccelerationLevel1.setOnSeekBarChangeListener(mlistener);
         seekBarPeakPowerLevel1.setOnSeekBarChangeListener(mlistener);
 
         seekBarAssistLevel2.setOnSeekBarChangeListener(mlistener);
+        seekBarTorqueAssistLevel2.setOnSeekBarChangeListener(mlistener);
         seekBarAccelerationLevel2.setOnSeekBarChangeListener(mlistener);
         seekBarPeakPowerLevel2.setOnSeekBarChangeListener(mlistener);
 
         seekBarAssistLevel3.setOnSeekBarChangeListener(mlistener);
+        seekBarTorqueAssistLevel3.setOnSeekBarChangeListener(mlistener);
         seekBarAccelerationLevel3.setOnSeekBarChangeListener(mlistener);
         seekBarPeakPowerLevel3.setOnSeekBarChangeListener(mlistener);
 
         seekBarAssistLevel4.setOnSeekBarChangeListener(mlistener);
+        seekBarTorqueAssistLevel4.setOnSeekBarChangeListener(mlistener);
         seekBarAccelerationLevel4.setOnSeekBarChangeListener(mlistener);
         seekBarPeakPowerLevel4.setOnSeekBarChangeListener(mlistener);
 
         seekBarAssistLevel5.setOnSeekBarChangeListener(mlistener);
+        seekBarTorqueAssistLevel5.setOnSeekBarChangeListener(mlistener);
         seekBarAccelerationLevel5.setOnSeekBarChangeListener(mlistener);
         seekBarPeakPowerLevel5.setOnSeekBarChangeListener(mlistener);
 
@@ -264,25 +286,30 @@ public class LevelsSetupActivity extends AppCompatActivity {
         cfg.ui8_number_of_assist_levels =  binding.seekBarAssistLevelsNumber.getProgress();
         cfg.ui8_eMTB_assist_level =  binding.seekBareMTBLevel.getProgress();
         cfg.ui8_cadence_RPM_limit = binding.seekBarTorqueRPMLimit.getProgress();
-        cfg.ui8_torque_boost_factor = binding.seekBarTorqueBoostFactor.getProgress();
+
 
         cfg.ui8_power_assist_level[0] = binding.seekBarAssistLevel1.getProgress();
+        cfg.ui8_torque_assist_level[0] = binding.seekBarTorqueAssistLevel1.getProgress();
         cfg.ui8_motor_acceleration_level[0] = binding.seekBarAccelerationLevel1.getProgress();
         cfg.ui8_target_peak_battery_power_div25[0] = binding.seekBarPeakPowerLevel1.getProgress();
 
         cfg.ui8_power_assist_level[1] = binding.seekBarAssistLevel2.getProgress();
+        cfg.ui8_torque_assist_level[1] = binding.seekBarTorqueAssistLevel2.getProgress();
         cfg.ui8_motor_acceleration_level[1] = binding.seekBarAccelerationLevel2.getProgress();
         cfg.ui8_target_peak_battery_power_div25[1] = binding.seekBarPeakPowerLevel2.getProgress();
 
         cfg.ui8_power_assist_level[2] = binding.seekBarAssistLevel3.getProgress();
+        cfg.ui8_torque_assist_level[2] = binding.seekBarTorqueAssistLevel3.getProgress();
         cfg.ui8_motor_acceleration_level[2] = binding.seekBarAccelerationLevel3.getProgress();
         cfg.ui8_target_peak_battery_power_div25[2] = binding.seekBarPeakPowerLevel3.getProgress();
 
         cfg.ui8_power_assist_level[3] = binding.seekBarAssistLevel4.getProgress();
+        cfg.ui8_torque_assist_level[3] = binding.seekBarTorqueAssistLevel4.getProgress();
         cfg.ui8_motor_acceleration_level[3] = binding.seekBarAccelerationLevel4.getProgress();
         cfg.ui8_target_peak_battery_power_div25[3] = binding.seekBarPeakPowerLevel4.getProgress();
 
         cfg.ui8_power_assist_level[4] = binding.seekBarAssistLevel5.getProgress();
+        cfg.ui8_torque_assist_level[4] = binding.seekBarTorqueAssistLevel5.getProgress();
         cfg.ui8_motor_acceleration_level[4] = binding.seekBarAccelerationLevel5.getProgress();
         cfg.ui8_target_peak_battery_power_div25[4] = binding.seekBarPeakPowerLevel5.getProgress();
 

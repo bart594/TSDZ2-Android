@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="eMTB Mode Level" />
+                    android:text="eMTB Mode Sensitivity" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -166,39 +166,6 @@
                         android:text="@{String.valueOf(cfg.ui8_cadence_RPM_limit)}" />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="Torque Boost Factor" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-
-                    <SeekBar
-                        android:id="@+id/seekBarTorqueBoostFactor"
-                        android:layout_width="320dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:indeterminate="false"
-                        android:max="10"
-                        android:progress="@{cfg.ui8_torque_boost_factor}" />
-
-                    <TextView
-                        android:id="@+id/TxtviewSeekBarTorqueBoostFactor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:text="@{String.valueOf(cfg.ui8_torque_boost_factor)}" />
-                </LinearLayout>
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -245,6 +212,38 @@
                         android:text="@{String.valueOf(cfg.ui8_power_assist_level[0] * 10)}" />
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Torque Support Value" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarTorqueAssistLevel1"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:indeterminate="false"
+                        android:max="150"
+                        android:progress="@{cfg.ui8_torque_assist_level[0]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarTorqueAssistLevel1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_torque_assist_level[0])}" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -356,6 +355,39 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="15dp"
                         android:text="@{String.valueOf(cfg.ui8_power_assist_level[1] * 10)}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Torque Support Value" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarTorqueAssistLevel2"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:indeterminate="false"
+                        android:max="150"
+                        android:progress="@{cfg.ui8_torque_assist_level[1]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarTorqueAssistLevel2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_torque_assist_level[1])}" />
                 </LinearLayout>
 
                 <TextView
@@ -476,6 +508,39 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
+                    android:text="Torque Support Value" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarTorqueAssistLevel3"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:indeterminate="false"
+                        android:max="150"
+                        android:progress="@{cfg.ui8_torque_assist_level[2]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarTorqueAssistLevel3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_torque_assist_level[2])}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
                     android:text="Motor Acceleration" />
 
 
@@ -588,6 +653,39 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
+                    android:text="Torque Support Value" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarTorqueAssistLevel4"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:indeterminate="false"
+                        android:max="150"
+                        android:progress="@{cfg.ui8_torque_assist_level[3]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarTorqueAssistLevel4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_torque_assist_level[3])}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
                     android:text="Motor Acceleration" />
 
 
@@ -693,6 +791,39 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="15dp"
                         android:text="@{String.valueOf(cfg.ui8_power_assist_level[4] * 10)}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Torque Support Value" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarTorqueAssistLevel5"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:indeterminate="false"
+                        android:max="150"
+                        android:progress="@{cfg.ui8_torque_assist_level[4]}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarTorqueAssistLevel5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_torque_assist_level[4])}" />
                 </LinearLayout>
 
                 <TextView
