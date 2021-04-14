@@ -234,6 +234,9 @@ public class SystemSetupActivity extends AppCompatActivity {
         checked = binding.SoftStartModeCB.isChecked();
         cfg.ui8_soft_start_feature_enabled = checked;
 
+        checked = binding.HybridModeCB.isChecked();
+        cfg.ui8_hybrid_mode_status = checked;
+
         if ((val = checkRange(binding.wheelPerimeterET, 1000, 2500)) == null) {
             showDialog(getString(R.string.wheel_perimeter), getString(R.string.range_error, 1000, 2500));
             return;

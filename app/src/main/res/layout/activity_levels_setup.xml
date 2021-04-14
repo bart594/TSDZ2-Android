@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="Torque RPM Limit" />
+                    android:text="ADC Step Min Current (0.16A)" />
 
 
                 <LinearLayout
@@ -148,22 +148,22 @@
                     android:orientation="horizontal">
 
                     <SeekBar
-                        android:id="@+id/seekBarTorqueRPMLimit"
+                        android:id="@+id/SeekBarADCMinCurrent"
                         android:layout_width="320dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="15dp"
                         android:indeterminate="false"
-                        android:max="120"
-                        android:progress="@{cfg.ui8_cadence_RPM_limit}" />
+                        android:max="3"
+                        android:progress="@{cfg.ui8_motor_current_min_adc}" />
 
                     <TextView
-                        android:id="@+id/TxtviewSeekBarTorqueRPMLimit"
+                        android:id="@+id/TxtviewSeekBarADCMinCurrent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="@{String.valueOf(cfg.ui8_cadence_RPM_limit)}" />
+                        android:text="@{String.valueOf(cfg.ui8_motor_current_min_adc)}" />
                 </LinearLayout>
 
                 <View

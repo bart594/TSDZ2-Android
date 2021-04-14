@@ -67,9 +67,10 @@ public class TSDZ_Config  {
     public boolean ui8_torque_sensor_calibration_feature_enabled;
     public boolean ui8_field_weakening_enabled;
     public int ui8_field_weakening_current;
-    public int ui8_cadence_RPM_limit;
+    public int ui8_motor_current_min_adc;
     public boolean ui8_soft_start_feature_enabled;
     public int  ui8_number_of_assist_levels;
+    public boolean ui8_hybrid_mode_status;
 
     private boolean first_data_chunk = true;
     private boolean second_data_chunk = true;
@@ -147,9 +148,10 @@ public class TSDZ_Config  {
             ui8_street_mode_speed_limit = (data[9] & 255);
             ui8_field_weakening_enabled = (data[10] & 255) != 0;
             ui8_field_weakening_current = (data[11] & 255);
-            ui8_cadence_RPM_limit = (data[12] & 255);
+            ui8_hybrid_mode_status = (data[12] & 255) != 0;
             ui8_soft_start_feature_enabled = (data[13] & 255) != 0;
             ui8_battery_soc_enable = (data[14] & 255);
+            ui8_motor_current_min_adc = (data[15] & 255);
             return false;
         }else if(data[1] == 3) {
             for (int i = 0; i < 5; i++)
@@ -170,7 +172,6 @@ public class TSDZ_Config  {
         }else if(data[1] == 5) {
             for (int i = 0; i < 6; i++)
                 ui16_torque_sensor_calibration[i][0] = (data[2 + i] & 255); //kg
-
                 ui16_torque_sensor_calibration[0][1] = (data[8] & 255) + ((data[9] & 255) << 8); //adc
                 ui16_torque_sensor_calibration[1][1] = (data[10] & 255) + ((data[11] & 255) << 8);
                 ui16_torque_sensor_calibration[2][1] = (data[12] & 255) + ((data[13] & 255) << 8);
@@ -228,9 +229,10 @@ public class TSDZ_Config  {
             data[9] = (byte) ui8_street_mode_speed_limit;
             data[10] = (byte) (ui8_field_weakening_enabled? 1 : 0);
             data[11] = (byte) ui8_field_weakening_current;
-            data[12] = (byte) ui8_cadence_RPM_limit;
+            data[12] = (byte) (ui8_hybrid_mode_status? 1 : 0);
             data[13] = (byte) (ui8_soft_start_feature_enabled ? 1 : 0);
             data[14] = (byte) ui8_battery_soc_enable;
+            data[15] = (byte) ui8_motor_current_min_adc;
             return data;
 
         }else if (third_data_chunk)  {

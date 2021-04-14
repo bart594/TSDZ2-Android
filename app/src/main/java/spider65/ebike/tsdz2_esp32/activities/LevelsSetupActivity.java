@@ -44,8 +44,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
         TextView SeekBarValueAssistLevelsNumber = findViewById(R.id.TxtviewSeekBarAssistLevelsNumber);
         SeekBar seekBareMTBLevel = findViewById(R.id.seekBareMTBLevel);
         TextView SeekBarValueeMTBLevel = findViewById(R.id.TxtviewSeekBareMTBLevel);
-        SeekBar seekBarTorqueRPMLimit = findViewById(R.id.seekBarTorqueRPMLimit);
-        TextView SeekBarValueTorqueRPMLimit = findViewById(R.id.TxtviewSeekBarTorqueRPMLimit);
+        SeekBar SeekBarADCMinCurrent = findViewById(R.id.SeekBarADCMinCurrent);
+        TextView SeekBarValueADCMinCurrent = findViewById(R.id.TxtviewSeekBarADCMinCurrent);
 
 
         SeekBar seekBarAssistLevel1 = findViewById(R.id.seekBarAssistLevel1);
@@ -114,8 +114,8 @@ public class LevelsSetupActivity extends AppCompatActivity {
                     case R.id.seekBareMTBLevel:
                         SeekBarValueeMTBLevel.setText(String.valueOf(progress));
                         break;
-                    case R.id.seekBarTorqueRPMLimit:
-                        SeekBarValueTorqueRPMLimit.setText(String.valueOf(progress));
+                    case R.id.SeekBarADCMinCurrent:
+                        SeekBarValueADCMinCurrent.setText(String.valueOf(progress));
                         break;
                     case R.id.seekBarAssistLevel1:
                         int assist_progress_custom_1 =  progress * 10;
@@ -214,7 +214,7 @@ public class LevelsSetupActivity extends AppCompatActivity {
 
         seekBarAssistLevelsNumber.setOnSeekBarChangeListener(mlistener);
         seekBareMTBLevel.setOnSeekBarChangeListener(mlistener);
-        seekBarTorqueRPMLimit.setOnSeekBarChangeListener(mlistener);
+        SeekBarADCMinCurrent.setOnSeekBarChangeListener(mlistener);
 
 
         seekBarAssistLevel1.setOnSeekBarChangeListener(mlistener);
@@ -285,7 +285,7 @@ public class LevelsSetupActivity extends AppCompatActivity {
 
         cfg.ui8_number_of_assist_levels =  binding.seekBarAssistLevelsNumber.getProgress();
         cfg.ui8_eMTB_assist_level =  binding.seekBareMTBLevel.getProgress();
-        cfg.ui8_cadence_RPM_limit = binding.seekBarTorqueRPMLimit.getProgress();
+        cfg.ui8_motor_current_min_adc = binding.SeekBarADCMinCurrent.getProgress();
 
 
         cfg.ui8_power_assist_level[0] = binding.seekBarAssistLevel1.getProgress();
