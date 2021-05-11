@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.SystemSetupActivity">
     <data>
-        <variable name="cfg"     type="spider65.ebike.tsdz2_esp32.data.TSDZ_Config"/>
-        <variable name="handler" type="spider65.ebike.tsdz2_esp32.activities.SystemSetupActivity"/>
+        <variable name="cfg"     type="spider65.ebike.tsdz2_sw102.data.TSDZ_Config"/>
+        <variable name="clickHandler" type="spider65.ebike.tsdz2_sw102.activities.SystemSetupActivity"/>
     </data>
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -193,7 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:checked="@{cfg.ui8_field_weakening_enabled}"
-                        android:onCheckedChanged="@{handler::onCheckedChanged}"
+                        android:onCheckedChanged="@{clickHandler::onCheckedChanged}"
                         android:text="Field Weakening" />
 
                     <TextView
@@ -373,6 +373,31 @@
                         android:inputType="number" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seekBarMaxSpeed"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="50"
+                        android:progress="@{cfg.ui8_wheel_max_speed}" />
+
+                    <TextView
+                        android:id="@+id/TxtviewSeekBarMaxSpeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="@{String.valueOf(cfg.ui8_wheel_max_speed)}" />
+                </LinearLayout>
+
                 <CheckBox
                     android:id="@+id/walkModeCB"
                     android:layout_width="wrap_content"
@@ -408,7 +433,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:checked="@={cfg.ui8_street_mode_power_limit_enabled}"
-                        android:onCheckedChanged="@{handler::onCheckedChanged}"
+                        android:onCheckedChanged="@{clickHandler::onCheckedChanged}"
                         android:text="@string/max_power" />
 
                     <EditText
@@ -491,15 +516,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{handler::onOkCancelClick}"
+                android:onClick="@{clickHandler::onOkCancelClick}"
                 android:text="@string/ok" />
 
             <Button
-                android:id="@+id/cancelButton"
+                android:id="@+id/exitButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{handler::onOkCancelClick}"
+                android:onClick="@{clickHandler::onOkCancelClick}"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="@string/cancel" />
         </LinearLayout>

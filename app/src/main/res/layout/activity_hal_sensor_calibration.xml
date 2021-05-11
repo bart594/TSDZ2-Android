@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.HallCalibrationActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="0,1,2,3"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/topLineatLayout"
+            android:orientation="vertical"
+            android:layout_weight="0"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttonLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="@string/motor_erps" />
+                <TextView
+                    android:id="@+id/erpsTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:textSize="18sp"
+                    android:text="@string/dash" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?android:attr/listDivider" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:shrinkColumns="*"
+                android:stretchColumns="*">
+
+                <TableRow>
+                    <TextView
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:text="@string/hal_n"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:text="@string/angle"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:text="@string/offset"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:text="@string/r_2"
+                        android:textSize="18sp" />
+                </TableRow>
+
+                <TableRow
+                    android:padding="2dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:text="@string/hal_1"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/angle1TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:text="@string/dash"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/offset1TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:text="@string/dash"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/err1TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:text="@string/dash"
+                        android:textSize="16sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:padding="2dp">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/hal_2" />
+                    <TextView
+                        android:id="@+id/angle2TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+
+                    <TextView
+                        android:id="@+id/offset2TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                    <TextView
+                        android:id="@+id/err2TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+                </TableRow>
+
+                <TableRow
+                    android:padding="2dp">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/hal_3" />
+                    <TextView
+                        android:id="@+id/angle3TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                    <TextView
+                        android:id="@+id/offset3TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                    <TextView
+                        android:id="@+id/err3TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                </TableRow>
+
+                <TableRow
+                    android:padding="2dp">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/hal_4" />
+                    <TextView
+                        android:id="@+id/angle4TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                    <TextView
+                        android:id="@+id/offset4TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                    <TextView
+                        android:id="@+id/err4TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+                </TableRow>
+
+                <TableRow
+                    android:padding="2dp">
+                    <TextView
+                        android:layout_margin="2dp"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:text="@string/hal_5" />
+                    <TextView
+                        android:id="@+id/angle5TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                    <TextView
+                        android:id="@+id/offset5TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                    <TextView
+                        android:id="@+id/err5TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                </TableRow>
+
+                <TableRow
+                    android:padding="2dp">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/hal_6" />
+                    <TextView
+                        android:id="@+id/angle6TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                    <TextView
+                        android:id="@+id/offset7TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+
+                    <TextView
+                        android:id="@+id/err6TV"
+                        android:gravity="center"
+                        android:layout_margin="2dp"
+                        android:textSize="16sp"
+                        android:text="@string/dash" />
+                </TableRow>
+
+            </TableLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/hallAngles" />
+
+                <TextView
+                    android:id="@+id/hallValuesTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/dash"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/hallOffset" />
+
+                <TextView
+                    android:id="@+id/hallUpDnDiffTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:text="@string/dash" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/startStopBT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:onClick="onButtonClick"
+                    android:text="@string/start_stop" />
+
+                <Button
+                    android:id="@+id/resetBT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:onClick="onButtonClick"
+                    android:text="@string/loadDefault" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:id="@+id/progressTV"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topLineatLayout">
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:onClick="onButtonClick"
+                android:enabled="false"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/save" />
+            <Button
+                android:id="@+id/exitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:onClick="onButtonClick"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/exit" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

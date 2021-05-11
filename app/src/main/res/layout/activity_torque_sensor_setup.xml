@@ -4,8 +4,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:context=".activities.SystemSetupActivity">
 	<data>
-		<variable name="cfg"     type="spider65.ebike.tsdz2_esp32.data.TSDZ_Config"/>
-		<variable name="handler" type="spider65.ebike.tsdz2_esp32.activities.TorqueSensorCalibrationActivity"/>
+		<variable name="cfg"     type="spider65.ebike.tsdz2_sw102.data.TSDZ_Config"/>
+		<variable name="handler" type="spider65.ebike.tsdz2_sw102.activities.TorqueSensorCalibrationActivity"/>
 	</data>
 
 	<androidx.coordinatorlayout.widget.CoordinatorLayout

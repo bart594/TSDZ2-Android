@@ -68,11 +68,32 @@
                 android:text="@string/temp_control" />
 
             <Button
+                android:id="@+id/various_setup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Various settings" />
+            
+			<Button
+                android:id="@+id/hall_calib_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/hall_calib" />
+
+            <Button
                 android:id="@+id/torque_sensor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="@string/torque_calib" />
+
+            <Button
+                android:id="@+id/reset_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="80dp"
+                android:text="Reset to defaults" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="spider65.ebike.tsdz2_esp32">
+    package="spider65.ebike.tsdz2_sw102">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -19,7 +19,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name=".MyApp"
+        android:name="spider65.ebike.tsdz2_sw102.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,69 +27,93 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.SystemSetupActivity"
+            android:name="spider65.ebike.tsdz2_sw102.activities.TSDZCfgActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="spider65.ebike.tsdz2_sw102.activities.SystemSetupActivity"
             android:label="@string/title_activity_system_setup"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.BatterySetupActivity"
+            android:name="spider65.ebike.tsdz2_sw102.activities.BatterySetupActivity"
             android:label="@string/title_activity_battery_setup"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.LevelsSetupActivity"
+            android:name="spider65.ebike.tsdz2_sw102.activities.LevelsSetupActivity"
             android:label="@string/title_activity_levels_setup"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.TemperatureSetupActivity"
+            android:name="spider65.ebike.tsdz2_sw102.activities.TemperatureSetupActivity"
             android:label="@string/title_activity_temperature_setup"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.TSDZCfgActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.ChartActivity"
+            android:name="spider65.ebike.tsdz2_sw102.activities.ChartActivity"
             android:label="@string/title_activity_chart"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.BluetoothSetupActivity"
-            android:label="@string/title_activity_bluetooth_setup"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.TorqueSensorCalibrationActivity"
-            android:label="@string/title_activity_torque_sensor_setup"
-            android:theme="@style/AppTheme.NoActionBar" />			
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            tools:ignore="LockedOrientationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="spider65.ebike.tsdz2_sw102.activities.BluetoothSetupActivity"
+            android:label="@string/title_activity_bluetooth_setup"
+            android:screenOrientation="portrait"            
+			android:theme="@style/AppTheme.NoActionBar" 
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="spider65.ebike.tsdz2_sw102.activities.TorqueSensorCalibrationActivity"
+            android:label="@string/title_activity_torque_sensor_setup"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="spider65.ebike.tsdz2_sw102.activities.TripResetActivity"
+            android:label="Trip reset stats"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="spider65.ebike.tsdz2_sw102.activities.VariousSetupActivity"
+            android:label="Various settings"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+       <activity
+           android:name="spider65.ebike.tsdz2_sw102.activities.HallCalibrationActivity"
+           android:label="@string/hall_calib"
+           android:screenOrientation="portrait"
+           android:theme="@style/AppTheme.NoActionBar"
+           tools:ignore="LockedOrientationActivity" />
+      <activity
+           android:name="spider65.ebike.tsdz2_sw102.MainActivity"
+           android:label="@string/app_name"
+           android:screenOrientation="portrait"
+           android:theme="@style/AppTheme.NoActionBar"
+           tools:ignore="LockedOrientationActivity">
+           <intent-filter>
+               <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <service
-            android:name=".NotificationService"
-			android:label="@string/app_name"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+               <category android:name="android.intent.category.LAUNCHER" />
+           </intent-filter>
+       </activity>
+       <service
+           android:name="spider65.ebike.tsdz2_sw102.NotificationService"
+           android:label="@string/app_name"
+           android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
 
-            <intent-filter>
+           <intent-filter>
 
-                <action android:name="android.service.notification.NotificationListenerService" />
+               <action android:name="android.service.notification.NotificationListenerService" />
 
-            </intent-filter>
+           </intent-filter>
 
-        </service>
-        <service
-            android:name=".TSDZBTService"
-            android:enabled="true"
-            android:exported="false" />
-		 <receiver android:name=".TSDZBTService$NavinfoServiceReceiver" android:enabled="true">
-            <intent-filter>
-                <action android:name="nav_msg"/>
-            </intent-filter>
-        </receiver>
-    </application>
+       </service>
+       <service
+           android:name="spider65.ebike.tsdz2_sw102.TSDZBTService"
+           android:enabled="true"
+           android:exported="false" />
+        <receiver android:name="spider65.ebike.tsdz2_sw102.TSDZBTService$NavinfoServiceReceiver" android:enabled="true">
+           <intent-filter>
+               <action android:name="nav_msg"/>
+           </intent-filter>
+       </receiver>
+   </application>
 
 </manifest>

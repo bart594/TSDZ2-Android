@@ -16,14 +16,16 @@
     <string name="dash">-</string>
     <string name="calibration">Cal</string>
     <string name="app_name">TSDZ2_SW102</string>
-    <string name="status">STATUS DATA</string>
-    <string name="debug">DEBUG DATA</string>
+    <string name="status_data">STATUS DATA</string>
+    <string name="debug_data">DEBUG DATA</string>
+    <string name="trip_data">TRIP STATS</string>
     <string name="btSetup">Setup Bluetooth</string>
     <string name="alwaysOn">Screen Always ON</string>
     <string name="config">Bike Configuration</string>
     <string name="title_activity_bluetooth_setup">Bluetooth Setup</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="exit">Exit</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="start">Start</string>
@@ -43,23 +45,29 @@
     <string name="battery_current">Battery Current</string>
     <string name="voltage">Battery Volt</string>
     <string name="motor_temp">Motor Temp.</string>
-    <string name="energy_used">Energy Used</string>
-    <string name="speedField">%.1f Km/h</string>
-    <string name="cadenceField">%1$d rmp</string>
+    <string name="energy_used">Battery used</string>
+    <string name="speedField">%.1f km/h</string>
+    <string name="cadenceField">%1$d rpm</string>
     <string name="powerField">%1$d W</string>
     <string name="currentField">%.1f A</string>
     <string name="voltageField">%.1f V</string>
     <string name="temperatureField">%1$d °C</string>
-    <string name="whField">%1$d Wh</string>
+    <string name="AvgWhField">%.2f wh/km</string>
+	<string name="weightField">%.1f kg</string>
+	<string name="whField">%1$d wh</string>
+	<string name="distanceField">%.2f km</string>
+    <string name="rangeField">%.1f km</string>
 
     <string name="duty_cycle">Duty Cycle %</string>
-    <string name="motor_erps">Motor ERPS</string>
+    <string name="motor_erps">Motor ERPS:</string>
     <string name="foc_angle">FOC Angle</string>
     <string name="torque_adc">Torque ADC</string>
     <string name="pedal_torque">Pedal Torque</string>
-    <string name="battery_energy_h_km">Energy Wh/km</string>
+    <string name="fw_offset">FW offset</string>
+    <string name="battery_energy_h_km">Avg. Battery Consum</string>
     <string name="adc_value">ADC value</string>
-    <string name="pedal_weight">Pedal Weight kg</string>
+    <string name="pedal_weight">Pedal Weight</string>
+    <string name="fw_hall_offset">FW Hall Offset</string>
 
     <string name="tsdz_cfg">Bike Configuration</string>
     <string name="error">Error</string>
@@ -69,14 +77,16 @@
     <string name="temp_control">Temperature and Throttle</string>
     <string name="cadence_calib">Cadence sensor calibration</string>
     <string name="torque_calib">Torque sensor calibration</string>
+    <string name="hall_calib">Hall calibration</string>   
     <string name="title_activity_system_setup">System Setup</string>
+    <string name="warning">Warning</string>
     <string name="motor">Motor</string>
     <string name="motor_type">Motor Type</string>
     <string name="acceleration">Acceleration</string>
     <string name="max_current">Max current (A)</string>
     <string name="max_power">Max Power (W)</string>
     <string name="sensors">Sensors</string>
-    <string name="wheel_cruise">Wheel / Walk/Cruise enable</string>
+    <string name="wheel_cruise">Wheel/Speed Limit/Walk/Cruise</string>
     <string name="light">Light</string>
     <string name="light_config">Lights Configuration</string>
     <string name="adv_cad_mode">Cadence sensor\nAdvanced mode</string>
@@ -85,7 +95,8 @@
     <string name="torque_adc_step">Torque sensor ADC step</string>
     <string name="threshold">0-cadence assist threshold</string>
     <string name="street_mode">Street Mode</string>
-    <string name="walk_mode_enabled">Walk mode enabled</string>
+    <string name="cruise_mode_enabled">Cruise mode enabled</string>
+    <string name="walk_mode_enabled">Walk/Cruise mode enabled</string>
     <string name="street_mode_throttle">Throttle enabled</string>
     <string name="wheel_perimeter">Wheel perim. (mm)</string>
     <string name="range_error">Value must be between %1$d and %2$d</string>
@@ -104,6 +115,7 @@
     <string name="soc_type">SOC display type</string>
     <string-array name="soc_types">
         <item> disable </item>
+        <item> time </item>
         <item> SOC % </item>
         <item> SOC Volt </item>
     </string-array>
@@ -131,11 +143,6 @@
     <string name="stop_temp">Shutoff Temp</string>
     <string name="throttle_control">Throttle Control</string>
     <string name="throttle_enabled">Throttle Enabled</string>
-    <string name="title_activity_cadence_sensor_calibration">Cadence sensor calibration</string>
-
-    <string name="cadenceStartError">Cannot start cadence calibration</string>
-    <string name="cadenceStopError">Cannot stop cadence calibration</string>
-    <string name="cadenceSaveError">Cannot save cadence value</string>
     
 	<string name="title_activity_torque_sensor_setup">Torque Sensor Setup</string>
     <string name="torque_sensor_kg">Torque Sensor KG value</string>
@@ -155,12 +162,50 @@
 
     <string name="title_activity_chart">Charts</string>
     <string name="assistLevel">Assist Level</string>
+    <string name="assist_mode">Assist Mode</string>
 
     <string-array name="motor_types">
         <item> 48V </item>
         <item> 36V </item>
-
     </string-array>
+
+ <string name="hal_n">Hall state</string>
+    <string name="hal_1">4</string>
+    <string name="hal_2">6</string>
+    <string name="hal_3">2</string>
+    <string name="hal_4">3</string>
+    <string name="hal_5">1</string>
+    <string name="hal_6">5</string>
+    <string name="angle">ΔΦ (deg)</string>
+    <string name="offset">ΔT (4us)</string>
+    <string name="r_2">R2</string>
+
+    <string name="warning_cfg">Dont\'change these values unless you know well what are you doing!</string>
+    <string name="phase_angle">Phase Angle adjust</string>
+    <string name="phase_angle_unit">Circle/256</string>
+    <string name="hall_offset_unit">4us/unit</string>
+    <string name="hall_offset">Hall Offset adjust</string>
+
+    <string name="motorTestStartError">Cannot start motor test</string>
+    <string name="motorTestStopError">Cannot stop motor test</string>
+    <string name="exitMotorRunningError">Motor is running\nStop test then exit</string>
+    <string name="calibrationSaveError">Calibration data NOT saved</string>
+    <string name="calibrationApplied">Calibration data applied</string>
+    <string name="calibrationDataValid">Calibration ended.\nPress \'SAVE\' to apply the calibration data</string>
+    <string name="calibrationDataNotValid">Calibration data NOT valid.\nRetry the calibration procedure</string>
+    <string name="warningMotorStart">Rise te rear wheel or remove the chain.\nThe motor will start spinning!</string>
+    <string name="cfgReadError">Error reading configuration data</string>
+    <string name="cfgSaved">Configuration data Saved</string>
+    <string name="cfgSaveError">Error saving configuration data</string>
+    <string name="motorTuning">Motor Tuning</string>
+    <string name="valuesNotChanged">Values not changed</string>
+    <string name="setDefaultValues">Set Default Values</string>
+    <string name="hallAngles">Angles (circle/256):</string>
+    <string name="hallOffset">Offsets (4us/unit):</string>
+    <string name="start_stop">Start/Stop</string>
+    <string name="loadDefault">Load Default</string>
+    <string name="motorTuningHelp">Phase Angle: full circle=256\nHall: 4us/step</string>
+    <string name="defaultLoaded">Default value loaded.\nPress \'SAVE\' to apply the default data</string>
 
 
     <string-array name="ligths_cfg">
@@ -174,9 +219,28 @@
         <item> Flashing - On</item>
         <item> Flashing - Flashing</item>
     </string-array>
+
     <string-array name="temperature_types">
         <item> None </item>
         <item> Controller ADC </item>
+    </string-array>
+
+    <string-array name="units_types">
+        <item> SI </item>
+        <item> Imperial </item>
+    </string-array>
+
+    <string-array name="timefield_types">
+        <item> none </item>
+        <item> time/uptime </item>
+        <item> SOC % </item>
+        <item> SOC Volt </item>
+    </string-array>
+
+    <string-array name="plus_types">
+        <item> quick menu </item>
+        <item> next screen </item>
+        <item> light switch </item>
     </string-array>
 
     <string-array name="delay_labels">
@@ -186,6 +250,7 @@
         <item> 2 msg/sec </item>
         <item> 1 msg/sec </item>
     </string-array>
+
     <integer-array name="delay_values">
         <item>5</item>
         <item>4</item>
@@ -204,7 +269,7 @@
     </string-array>
 
 
-    <!--  Chart Example Values -->
+    <!--  Chart Values -->
     <string name="bike_sessions">Bike sessions</string>
     <string name="data_select">Select data</string>
 

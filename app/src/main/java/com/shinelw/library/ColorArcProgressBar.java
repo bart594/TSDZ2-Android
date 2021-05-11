@@ -13,7 +13,7 @@ import android.graphics.SweepGradient;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import spider65.ebike.tsdz2_esp32.R;
+import spider65.ebike.tsdz2_sw102.R;
 
 /**
  * colorful arc progress bar
