@@ -49,7 +49,6 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
-import static java.util.Arrays.copyOfRange;
 import static spider65.ebike.tsdz2_sw102.TSDZConst.DEBUG_ADV_SIZE;
 import static spider65.ebike.tsdz2_sw102.TSDZConst.STATUS_ADV_SIZE;
 import static spider65.ebike.tsdz2_sw102.TSDZConst.TRIP_ADV_SIZE;
@@ -132,13 +131,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         mTitle.setText(R.string.trip_data);
                         break;
                     case 1:
-                        //if (service != null && service.getConnectionStatus() == TSDZBTService.ConnectionState.CONNECTED)
-                        //TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_STATUS_DATA});
+                        if (service != null && service.getConnectionStatus() == TSDZBTService.ConnectionState.CONNECTED)
+                        TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_STATUS_DATA});
                         mTitle.setText(R.string.status_data);
                         break;
                     case 2:
-                        //if (service != null && service.getConnectionStatus() == TSDZBTService.ConnectionState.CONNECTED)
-                        //TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_DEBUG_DATA});
+                        if (service != null && service.getConnectionStatus() == TSDZBTService.ConnectionState.CONNECTED)
+                        TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_DEBUG_DATA});
                         mTitle.setText(R.string.debug_data);
                         break;
                 }
@@ -295,8 +294,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         if (service != null && service.getConnectionStatus() == TSDZBTService.ConnectionState.CONNECTED) {
             menu.findItem(R.id.config).setEnabled(true);
         } else {
-            menu.findItem(R.id.config).setEnabled(true);
-            //menu.findItem(R.id.config).setEnabled(false);
+            menu.findItem(R.id.config).setEnabled(false);
         }
         return true;
     }
@@ -523,7 +521,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 					invalidateOptionsMenu();
 
 					try {
-                        //set time in mili
+                        //set time in milli
                         Thread.sleep(500);
 
                     }catch (Exception e){
@@ -572,14 +570,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         // refresh Trip Fragment if visibile
                         if (trip.setData(data)) {
                             System.arraycopy(data, 0, lastTripData, 0, TRIP_ADV_SIZE);
+                            refreshView();
                             mainPagerAdapter.getMyFragment(viewPager.getCurrentItem()).refreshView();
                         }
                     }
                     break;
 
                 case TSDZBTService.TSDZ_STATUS_BROADCAST:
-                    if(viewPager.getCurrentItem() != 1)
-                        return;
                     data = intent.getByteArrayExtra(TSDZBTService.VALUE_EXTRA);
                     if (!Arrays.equals(lastStatusData, data)) {
                         if (status.setData(data)) {
@@ -610,12 +607,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
                 case TSDZBTService.TSDZ_NO_DATA_BROADCAST:
 
+                    if (viewPager.getCurrentItem() == 0)
+                        TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_TRIP_DATA});
+                    else if(viewPager.getCurrentItem() == 2)
+                        TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_DEBUG_DATA});
+
                 case TSDZBTService.TSDZ_MOTOR_DATA_BROADCAST:
 
                     if (viewPager.getCurrentItem() == 0)
                         TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_TRIP_DATA});
-                    else if (viewPager.getCurrentItem() == 1)
-                        TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_STATUS_DATA});
                     else if(viewPager.getCurrentItem() == 2)
                        TSDZBTService.getBluetoothService().writeCommand(new byte[] {TSDZConst.CMD_DEBUG_DATA});
 

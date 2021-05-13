@@ -1,5 +1,6 @@
 package spider65.ebike.tsdz2_sw102.activities;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -102,6 +103,7 @@ public class LevelsSetupActivity extends AppCompatActivity {
         TextView SeekBarValueWalkAssistLevel5 = findViewById(R.id.TxtviewSeekBarWalkAssistLevel5);
 
         mlistener = new SeekBar.OnSeekBarChangeListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 switch (seekBar.getId()) {

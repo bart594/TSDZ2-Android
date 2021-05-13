@@ -48,11 +48,12 @@ public class TSDZBTService extends Service {
     public static String TSDZ_UART_SERVICE = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
     public static String TSDZ_CHARACTERISTICS_RX = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
     public static String TSDZ_CHARACTERISTICS_TX = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+    public static String TSDZ_CHARACTERISTICS_TX_STATUS = "6e400004-b5a3-f393-e0a9-e50e24dcca9e";
     public static String CLIENT_CHARACTERISTIC_TSDZ2 = "00002902-0000-1000-8000-00805f9b34fb";
     public final static UUID UUID_TSDZ_SERVICE = UUID.fromString(TSDZ_UART_SERVICE);
     public final static UUID UUID_RCV_DATA_CHARACTERISTIC = UUID.fromString(TSDZ_CHARACTERISTICS_TX);
     public final static UUID UUID_SEND_DATA_CHARACTERISTIC = UUID.fromString(TSDZ_CHARACTERISTICS_RX);
-
+    public final static UUID UUID_STATUS_DATA_CHARACTERISTIC = UUID.fromString(TSDZ_CHARACTERISTICS_TX_STATUS);
 
     public static final String ADDRESS_EXTRA = "ADDRESS";
     public static final String VALUE_EXTRA = "VALUE";
@@ -87,6 +88,7 @@ public class TSDZBTService extends Service {
 
     private BluetoothGattCharacteristic tsdz_tx_char = null;
     private BluetoothGattCharacteristic tsdz_rx_char = null;
+    private BluetoothGattCharacteristic tsdz_status_char = null;
 
     public static TSDZBTService getBluetoothService() {
         return mService;
@@ -254,15 +256,18 @@ public class TSDZBTService extends Service {
                         for (BluetoothGattCharacteristic c:lc) {
                             if (c.getUuid().equals(UUID_RCV_DATA_CHARACTERISTIC)) {
                                 tsdz_tx_char = c;
+                                Log.d(TAG, "UUID_RCV_CHARACTERISTIC enable notifications");
+                            } else if(c.getUuid().equals(UUID_STATUS_DATA_CHARACTERISTIC)) {
+                                tsdz_status_char = c;
                                 Log.d(TAG, "UUID_STATUS_CHARACTERISTIC enable notifications");
                             } else if(c.getUuid().equals(UUID_SEND_DATA_CHARACTERISTIC)) {
                                 tsdz_rx_char = c;
-                                Log.d(TAG, "UUID_CONFIG_CHARACTERISTIC enable notifications");
+                                Log.d(TAG, "UUID_SEND_DATA_CHARACTERISTIC enable notifications");
                             }
                         }
                     }
                 }
-                if (tsdz_tx_char == null || tsdz_rx_char == null) {
+                if (tsdz_tx_char == null || tsdz_status_char == null || tsdz_rx_char == null) {
                     Intent bi = new Intent(CONNECTION_FAILURE_BROADCAST);
                     // TODO bi.putExtra("MESSAGE", "Error Detail");
                     LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
@@ -277,6 +282,7 @@ public class TSDZBTService extends Service {
             // setCharacteristicNotification is asynchronous. Before to make a new call we
                 // must wait the end of the previous in the callback onDescriptorWrite
                 setCharacteristicNotification(tsdz_tx_char,true);
+                setCharacteristicNotification(tsdz_status_char,true);
             } else {
                 Log.w(TAG, "onServicesDiscovered received: " + status);
             }
@@ -311,26 +317,21 @@ public class TSDZBTService extends Service {
             //Log.d(TAG, "onCharacteristicChanged:" + characteristic.getUuid().toString());
             byte [] data = characteristic.getValue();
             if (UUID_RCV_DATA_CHARACTERISTIC.equals(characteristic.getUuid())) {
-                    if ((data [0] == CMD_STATUS_DATA)) {
-                        Intent bi = new Intent(TSDZ_STATUS_BROADCAST);
-                        bi.putExtra(VALUE_EXTRA, data);
+                    if (data[0] == CMD_GET_CONFIG_DATA) {
+                        Intent bi = new Intent(TSDZ_CFG_READ_BROADCAST);
+                        bi.putExtra(VALUE_EXTRA, characteristic.getValue());
                         LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
-                        Log.d(TAG, "STATUS");
+                        //Log.d(TAG, "read CFG");
                     }else if (data[0] == CMD_DEBUG_DATA) {
                         Intent bi = new Intent(TSDZ_DEBUG_BROADCAST);
                         bi.putExtra(VALUE_EXTRA, characteristic.getValue());
                         LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
                         //Log.d(TAG, "DEBUG DATA");
-                    } else if (data[0] == CMD_GET_CONFIG_DATA) {
-                        Intent bi = new Intent(TSDZ_CFG_READ_BROADCAST);
-                        bi.putExtra(VALUE_EXTRA, characteristic.getValue());
-                        LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
-                        //Log.d(TAG, "read CFG");
                     } else if (data[0] == CMD_MOTOR_DATA) {
                         Intent bi = new Intent(TSDZ_MOTOR_DATA_BROADCAST);
                         bi.putExtra(VALUE_EXTRA, characteristic.getValue());
                         LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
-                        Log.d(TAG, "MOTOR");
+                        //Log.d(TAG, "MOTOR DATA");
                     } else if (data[0] == CMD_TRIP_DATA) {
                         Intent bi = new Intent(TSDZ_TRIP_DATA_BROADCAST);
                         bi.putExtra(VALUE_EXTRA, characteristic.getValue());
@@ -340,12 +341,27 @@ public class TSDZBTService extends Service {
                         Intent bi = new Intent(TSDZ_NO_DATA_BROADCAST);
                         bi.putExtra(VALUE_EXTRA, characteristic.getValue());
                         LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
-                       Log.d(TAG, "NOP");
+                        //Log.d(TAG, "NOP");
                     } else {
                         Log.e(TAG, "Wrong RX Advertising Data");
                     }
+                }else if(UUID_STATUS_DATA_CHARACTERISTIC.equals(characteristic.getUuid())){
+                if ((data [0] == CMD_STATUS_DATA)) {
+                    Intent bi = new Intent(TSDZ_STATUS_BROADCAST);
+                    bi.putExtra(VALUE_EXTRA, data);
+                    LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
+                    //Log.d(TAG, "STATUS DATA");
+                }else if (data[0] == CMD_DEBUG_DATA) {
+                    Intent bi = new Intent(TSDZ_DEBUG_BROADCAST);
+                    bi.putExtra(VALUE_EXTRA, characteristic.getValue());
+                    LocalBroadcastManager.getInstance(TSDZBTService.this).sendBroadcast(bi);
+                    //Log.d(TAG, "DEBUG DATA");
+                }else {
+                    Log.e(TAG, "Wrong STATUS Advertising Data");
                 }
             }
+            }
+
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt,
@@ -409,6 +425,7 @@ public class TSDZBTService extends Service {
         if (mConnectionState == ConnectionState.CONNECTED) {
             mConnectionState = ConnectionState.DISCONNECTING;
             setCharacteristicNotification(tsdz_tx_char,false);
+            setCharacteristicNotification(tsdz_status_char,false);
         } else
             mBluetoothGatt.disconnect();
     }
@@ -423,7 +440,7 @@ public class TSDZBTService extends Service {
      * callback.
      */
     public void readCfg() {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null || tsdz_rx_char == null) {
+        if (mBluetoothAdapter == null || mBluetoothGatt == null || tsdz_tx_char == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
             return;
         }

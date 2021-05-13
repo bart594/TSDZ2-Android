@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='TSDZ2_ESP32'
+rootProject.name='TSDZ2_SW102'
